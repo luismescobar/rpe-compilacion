@@ -522,6 +522,90 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
   .toast{bottom:62px;right:10px}
 }
 @media(max-width:400px){.temas-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ── ORIENTACIÓN VIEW ── */
+.orient-view{max-width:760px;margin:0 auto;padding:20px 14px 60px}
+.orient-hdr{margin-bottom:16px}
+.orient-hdr h2{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.orient-hdr p{font-size:12.5px;color:var(--g500);line-height:1.5}
+.orient-note{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r8);padding:10px 14px;font-size:11.5px;color:#92400e;margin-bottom:16px;line-height:1.55}
+.orient-note strong{color:#78350f}
+.orient-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.orient-cnt{border-radius:var(--r10);padding:14px;text-align:center;cursor:pointer;transition:box-shadow .12s;border:1.5px solid transparent}
+.orient-cnt:hover{box-shadow:var(--sh-md)}
+.orient-cnt.ciu{background:#ecfdf5;border-color:#6ee7b7}
+.orient-cnt.est{background:#fff1f2;border-color:#fca5a5}
+.orient-cnt.neu{background:var(--g50);border-color:var(--g200)}
+.orient-cnt.ciu.active{background:#d1fae5;border-color:#10b981;box-shadow:0 0 0 2px #10b98133}
+.orient-cnt.est.active{background:#fee2e2;border-color:#ef4444;box-shadow:0 0 0 2px #ef444433}
+.orient-cnt.neu.active{background:var(--g100);border-color:var(--g400)}
+.orient-cnt-n{font-size:30px;font-weight:800;line-height:1}
+.orient-cnt.ciu .orient-cnt-n{color:#059669}
+.orient-cnt.est .orient-cnt-n{color:#dc2626}
+.orient-cnt.neu .orient-cnt-n{color:var(--g500)}
+.orient-cnt-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.orient-cnt.ciu .orient-cnt-lbl{color:#065f46}
+.orient-cnt.est .orient-cnt-lbl{color:#991b1b}
+.orient-cnt.neu .orient-cnt-lbl{color:var(--g500)}
+.orient-cnt-sub{font-size:10px;color:var(--g400);margin-top:2px}
+.orient-meter-wrap{background:var(--white);border:1px solid var(--g200);border-radius:var(--r10);padding:14px;margin-bottom:18px}
+.orient-meter-lbl{font-size:10.5px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.orient-meter{height:14px;border-radius:var(--rF);overflow:hidden;display:flex;gap:2px;background:var(--g100)}
+.orient-seg{height:100%;transition:width .3s}
+.orient-seg.ciu{background:#10b981}
+.orient-seg.est{background:#ef4444}
+.orient-seg.neu{background:var(--g300)}
+.orient-meter-leg{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
+.orient-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--g600)}
+.orient-leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.orient-yr-sec{background:var(--white);border:1px solid var(--g200);border-radius:var(--r10);padding:14px;margin-bottom:18px}
+.orient-yr-sec h3{font-size:12px;font-weight:700;color:var(--g700);margin-bottom:12px}
+.orient-yr-chart{display:flex;align-items:flex-end;gap:4px;height:80px}
+.orient-yr-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;cursor:pointer}
+.orient-yr-col:hover .orient-yr-bar-wrap{opacity:.75}
+.orient-yr-bar-wrap{width:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:1px}
+.orient-yr-bar{width:100%;border-radius:2px 2px 0 0;min-height:2px}
+.orient-yr-bar.ciu{background:#10b981}
+.orient-yr-bar.est{background:#ef4444}
+.orient-yr-bar.neu{background:var(--g200)}
+.orient-yr-lbl{font-size:8.5px;color:var(--g400);white-space:nowrap;margin-top:4px}
+.orient-period-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+.orient-period{background:var(--white);border:1px solid var(--g200);border-radius:var(--r10);padding:12px 10px;cursor:pointer;transition:all .12s}
+.orient-period:hover{border-color:var(--blue);box-shadow:var(--sh-sm)}
+.orient-period-yr{font-size:10px;font-weight:800;color:var(--blue);margin-bottom:4px}
+.orient-period-n{font-size:18px;font-weight:800;color:var(--g900);line-height:1}
+.orient-period-lbl{font-size:10px;color:var(--g500);margin-bottom:6px}
+.orient-period-bar{height:5px;border-radius:var(--rF);overflow:hidden;display:flex;gap:1px;margin-bottom:4px}
+.orient-period-bar .ciu{background:#10b981}
+.orient-period-bar .est{background:#ef4444}
+.orient-period-bar .neu{background:var(--g200)}
+.orient-period-trend{font-size:10px;font-weight:700}
+.orient-period-trend.favor-c{color:#059669}
+.orient-period-trend.favor-e{color:#dc2626}
+.orient-period-trend.favor-n{color:var(--g400)}
+.orient-drill{background:var(--white);border:1px solid var(--g200);border-radius:var(--r10);padding:12px;margin-bottom:14px}
+.orient-drill-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
+.orient-drill-title{font-size:13px;font-weight:700;color:var(--g900)}
+.orient-drill-sub{font-size:11px;color:var(--g500)}
+.orient-drill-item{padding:8px 0;border-bottom:1px solid var(--g100);cursor:pointer;transition:padding .07s}
+.orient-drill-item:last-child{border-bottom:none}
+.orient-drill-item:hover{padding-left:6px}
+.orient-drill-meta{display:flex;align-items:center;gap:5px;margin-bottom:3px;flex-wrap:wrap}
+.orient-kw{font-size:10px;padding:1px 5px;border-radius:var(--r4);font-weight:600}
+.orient-kw.ciu{background:#d1fae5;color:#065f46}
+.orient-kw.est{background:#fee2e2;color:#991b1b}
+.orient-kw.neu{background:var(--g100);color:var(--g600)}
+.orient-drill-rub{font-size:12.5px;color:var(--g900);line-height:1.4}
+.orient-empty{text-align:center;padding:28px;color:var(--g400);font-size:13px}
+@media(max-width:640px){
+  .orient-period-grid{grid-template-columns:repeat(3,1fr)}
+  .orient-cnt-n{font-size:22px}
+  .orient-yr-lbl{font-size:7px}
+}
+@media(max-width:420px){
+  .orient-period-grid{grid-template-columns:repeat(2,1fr)}
+  .orient-summary{gap:6px}
+}
 </style>
 </head>
 <body>
@@ -663,6 +747,10 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       Cronología
     </button>
+    <button class="vtab" data-view="orient" onclick="setView('orient')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+      Orientación
+    </button>
     <div class="tb-div"></div>
     <button class="btn-filter" id="btnFilter" onclick="toggleSidebar()">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>
@@ -689,6 +777,9 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
   </button>
   <button class="bn-btn" onclick="setView('crono');bnSet(this)">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Crono
+  </button>
+  <button class="bn-btn" onclick="setView('orient');bnSet(this)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>Orient.
   </button>
   <button class="bn-btn" onclick="showLeyes();bnSet(this)">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Leyes
@@ -745,7 +836,7 @@ const ALL_TEMAS=["Indemnización", "Otro", "Actividad irregular", "Daño moral",
 const EPOCHS={"VII": {"presidente": "Juan Manuel Jiménez Illescas (2011-2013) / Manuel Luciano Hallivis Pelayo (2014-2016)", "magistrados": ["Francisco Cuevas Godínez", "Manuel Luciano Hallivis Pelayo", "Juan Manuel Jiménez Illescas", "Nora Elizabeth Urby Genel", "Juan Ángel Chávez Ramírez", "Alfredo Salgado Loyo", "Carlos Mena Adame", "Víctor Martín Orduña Muñoz", "Magda Zulema Mosri Gutiérrez", "Rafael Anzures Uribe", "Rafael Estrada Sámano", "Guillermo Domínguez Belloc", "Luis Humberto Delgadillo Gutiérrez", "Olga Hernández Espíndola"]}, "VIII": {"presidente": "Manuel Luciano Hallivis Pelayo (2014-2016) / Carlos Chaurand Arzate (2017-2019)", "magistrados": ["Manuel Luciano Hallivis Pelayo", "Carlos Chaurand Arzate", "Rafael Estrada Sámano", "Juan Ángel Chávez Ramírez", "Rafael Anzures Uribe", "Alfredo Salgado Loyo", "Víctor Martín Orduña Muñoz", "Carlos Mena Adame", "Juan Manuel Jiménez Illescas", "Magda Zulema Mosri Gutiérrez", "Nora Elizabeth Urby Genel", "Guillermo Valls Esponda", "Julián Alfonso Olivas Ugalde", "Juan Carlos Roa Jacobo"]}, "IX": {"presidente": "Rafael Anzures Uribe (2020-2022) / Guillermo Valls Esponda (2023-2025) / José Ramón Amieva Gálvez (2026-2028)", "magistrados": ["Rafael Anzures Uribe", "Guillermo Valls Esponda", "José Ramón Amieva Gálvez", "Nora Elizabeth Urby Genel", "Carlos Chaurand Arzate", "Julián Alfonso Olivas Ugalde", "Juan Manuel Jiménez Illescas", "Magda Zulema Mosri Gutiérrez", "Víctor Martín Orduña Muñoz", "Alfredo Salgado Loyo", "Carlos Mena Adame", "Rafael Estrada Sámano", "Luz María Anaya Domínguez", "Julio Ángel Sabines Chesterking", "Eduardo Santillán Pérez", "Selene Cruz Alcalá", "Juan Carlos Roa Jacobo"]}};
 const PG=20;
 const YEAR_MIN=2013,YEAR_MAX=2026;
-const st={view:'biblioteca',page:0,sel:-1,filtered:[...DATA],temasDrill:null,leyes:false,readerMode:'normal'};
+const st={view:'biblioteca',page:0,sel:-1,filtered:[...DATA],temasDrill:null,leyes:false,readerMode:'normal',orientFilter:null};
 const isMob=()=>window.innerWidth<640;
 const isNarrow=()=>window.innerWidth<1024;
 
@@ -848,7 +939,7 @@ function showLeyes(){
   document.getElementById('detOv')?.classList.remove('show');
   document.getElementById('vw').innerHTML='<div class="v-scroll"><div class="leyes-view"><div class="leyes-inner">'+document.getElementById('leyes-raw').innerHTML+'</div></div></div>';
 }
-function renderView(){if(st.leyes)return;if(st.view==='biblioteca')renderBiblioteca();else if(st.view==='lista')renderLista();else if(st.view==='temas')renderTemas();else renderTimeline();}
+function renderView(){if(st.leyes)return;if(st.view==='biblioteca')renderBiblioteca();else if(st.view==='lista')renderLista();else if(st.view==='temas')renderTemas();else if(st.view==='orient')renderOrientacion();else renderTimeline();}
 
 function byCount(arr,fn){
   const c={};arr.forEach(x=>{const k=fn(x);if(Array.isArray(k))k.forEach(v=>c[v]=(c[v]||0)+1);else c[k]=(c[k]||0)+1;});
@@ -1022,6 +1113,173 @@ function renderTimeline(){
   }).join('');
   const html=yrs.map(y=>{const its=by[y];const ih=its.map(d=>{const gi=st.filtered.indexOf(d);const tc=d.temas.slice(0,1).map(t=>`<span class="li-tag">${esc(t)}</span>`).join('');return`<div class="tl-item" onclick="openItem(${gi})"><div class="tl-meta"><span class="bdg bdg-${d.tipo}" style="font-size:10px">${d.tipo}</span><span class="bdg bdg-${d.source}" style="font-size:10px">${d.source}</span><span style="font-size:11px;color:var(--g500)">${esc(d.sala)}</span>${tc}</div><div class="tl-rub">${esc(d.rubro.length>115?d.rubro.slice(0,115)+'…':d.rubro)}</div></div>`;}).join('');return`<div class="tl-yr"><div class="tl-yr-hdr"><div class="tl-yr-lbl">${y}</div><div class="tl-yr-line"></div><div class="tl-yr-cnt">${its.length} criterio${its.length!==1?'s':''}</div></div><div class="tl-items">${ih}</div></div>`;}).join('');
   document.getElementById('vw').innerHTML=`<div class="v-scroll"><div class="timeline-view"><div class="timeline-card" style="margin-top:0;margin-bottom:16px"><div class="lib-section-h"><div><h2>Años</h2><p>Selecciona un año para abrir sus criterios.</p></div><button class="fchip-all" onclick="clearFilters();setView('crono')">Restablecer</button></div><div class="lib-year-map">${map}</div></div>${html||'<p style="color:var(--g400);text-align:center;padding:60px">Sin resultados</p>'}</div></div>`;
+}
+
+/* ── ORIENTACIÓN: keywords ── */
+const OKW_C=[
+  'derecho a la indemnización','tiene derecho a ser indemnizado','procede la indemnización',
+  'debe indemnizar','obligación del estado de indemnizar','responsabilidad objetiva',
+  'reparación integral','daño moral','dignidad humana','derechos humanos',
+  'perspectiva de género','interés superior del menor','víctima',
+  'acceso a la justicia','a favor del gobernado','el particular no está obligado',
+  'no puede negarse la indemnización','interpretación conforme','pro persona',
+  'in dubio pro','protección del gobernado','se acredita el nexo causal',
+  'desigualdad ante los demás','actividad irregular del estado','lesión patrimonial antijurídica'
+];
+const OKW_E=[
+  'caducidad','prescripción','improcedente la reclamación','no procede otorgar',
+  'el particular debe acreditar','carga de la prueba corresponde al particular',
+  'no se configura','no existe nexo','no se acredita','caso fortuito','fuerza mayor',
+  'no genera responsabilidad','actividad lícita','dentro del margen de discrecionalidad',
+  'no es irregular','plazo fatal','límite temporal','excepción al deber de indemnizar',
+  'no hay responsabilidad patrimonial','daño no acreditado','no puede atribuirse al estado'
+];
+function oScore(d){
+  const t=[d.rubro,d.contexto,d.criterio,d.implicacion].join(' ').toLowerCase();
+  const pc=OKW_C.filter(k=>t.includes(k)).length;
+  const pe=OKW_E.filter(k=>t.includes(k)).length;
+  const kc=OKW_C.filter(k=>t.includes(k)).slice(0,2);
+  const ke=OKW_E.filter(k=>t.includes(k)).slice(0,2);
+  const favor=pc>pe?'C':pe>pc?'E':'N';
+  return{favor,pc,pe,kc,ke};
+}
+
+const ORIENT_PERIODS=[
+  {lbl:'2013–2015',yrs:[2013,2014,2015]},
+  {lbl:'2016–2018',yrs:[2016,2017,2018]},
+  {lbl:'2019–2021',yrs:[2019,2020,2021]},
+  {lbl:'2022–2024',yrs:[2022,2023,2024]},
+  {lbl:'2025–2026',yrs:[2025,2026]}
+];
+
+function renderOrientacion(){
+  const items=st.filtered;
+  if(!items.length){
+    document.getElementById('vw').innerHTML='<div class="v-scroll"><div class="orient-view"><div class="orient-empty">Sin criterios para los filtros actuales.</div></div></div>';
+    return;
+  }
+  const scored=items.map((d,gi)=>({d,gi,s:oScore(d)}));
+  const nC=scored.filter(x=>x.s.favor==='C').length;
+  const nE=scored.filter(x=>x.s.favor==='E').length;
+  const nN=scored.filter(x=>x.s.favor==='N').length;
+  const tot=scored.length;
+
+  /* summary counters */
+  const pctC=Math.round(nC/tot*100),pctE=Math.round(nE/tot*100),pctN=100-pctC-pctE;
+  const sumHtml=`<div class="orient-summary">
+    <button class="orient-cnt ciu ${st.orientFilter==='C'?'active':''}" onclick="toggleOrientFilter('C')">
+      <div class="orient-cnt-n">${nC}</div>
+      <div class="orient-cnt-lbl">Pro-ciudadano</div>
+      <div class="orient-cnt-sub">${pctC}% del total</div>
+    </button>
+    <button class="orient-cnt neu ${st.orientFilter==='N'?'active':''}" onclick="toggleOrientFilter('N')">
+      <div class="orient-cnt-n">${nN}</div>
+      <div class="orient-cnt-lbl">Neutral / técnico</div>
+      <div class="orient-cnt-sub">${pctN}% del total</div>
+    </button>
+    <button class="orient-cnt est ${st.orientFilter==='E'?'active':''}" onclick="toggleOrientFilter('E')">
+      <div class="orient-cnt-n">${nE}</div>
+      <div class="orient-cnt-lbl">Pro-Estado</div>
+      <div class="orient-cnt-sub">${pctE}% del total</div>
+    </button>
+  </div>`;
+
+  /* overall meter */
+  const meterHtml=`<div class="orient-meter-wrap">
+    <div class="orient-meter-lbl">Balance general · ${tot} criterios</div>
+    <div class="orient-meter">
+      <div class="orient-seg ciu" style="width:${pctC}%"></div>
+      <div class="orient-seg est" style="width:${pctE}%"></div>
+      <div class="orient-seg neu" style="flex:1"></div>
+    </div>
+    <div class="orient-meter-leg">
+      <span class="orient-leg-item"><span class="orient-leg-dot" style="background:#10b981"></span>Pro-ciudadano (${pctC}%)</span>
+      <span class="orient-leg-item"><span class="orient-leg-dot" style="background:#ef4444"></span>Pro-Estado (${pctE}%)</span>
+      <span class="orient-leg-item"><span class="orient-leg-dot" style="background:var(--g300)"></span>Neutral (${pctN}%)</span>
+    </div>
+  </div>`;
+
+  /* year chart */
+  const byYr={};scored.forEach(x=>{const y=x.d.year||'?';if(!byYr[y])byYr[y]={C:0,E:0,N:0,tot:0};byYr[y][x.s.favor]++;byYr[y].tot++;});
+  const yrs=Array.from({length:14},(_,i)=>2013+i);
+  const maxYTot=Math.max(...yrs.map(y=>byYr[y]?.tot||0),1);
+  const yrCols=yrs.map(y=>{
+    const d2=byYr[y]||{C:0,E:0,N:0,tot:0};
+    const h=Math.max(d2.tot/maxYTot*100,d2.tot>0?6:0);
+    const hC=d2.tot?Math.round(d2.C/d2.tot*h):0;
+    const hE=d2.tot?Math.round(d2.E/d2.tot*h):0;
+    const hN=Math.max(h-hC-hE,0);
+    return`<div class="orient-yr-col" title="${y}: ${d2.tot} criterios · ${d2.C} pro-ciudadano · ${d2.E} pro-Estado" onclick="setYear(${y})">
+      <div class="orient-yr-bar-wrap">
+        ${d2.C?`<div class="orient-yr-bar ciu" style="height:${hC}px"></div>`:''}
+        ${d2.E?`<div class="orient-yr-bar est" style="height:${hE}px"></div>`:''}
+        ${d2.N?`<div class="orient-yr-bar neu" style="height:${hN}px"></div>`:''}
+      </div>
+      <div class="orient-yr-lbl">${y}</div>
+    </div>`;
+  }).join('');
+  const yrHtml=`<div class="orient-yr-sec">
+    <h3>Distribución anual · toca un año para filtrar criterios</h3>
+    <div class="orient-yr-chart">${yrCols}</div>
+  </div>`;
+
+  /* period cards */
+  const periodHtml=`<div class="orient-period-grid">${ORIENT_PERIODS.map(p=>{
+    const ps=scored.filter(x=>p.yrs.includes(x.d.year));
+    const pC=ps.filter(x=>x.s.favor==='C').length;
+    const pE=ps.filter(x=>x.s.favor==='E').length;
+    const pN=ps.filter(x=>x.s.favor==='N').length;
+    const pT=ps.length;
+    if(!pT)return`<div class="orient-period"><div class="orient-period-yr">${p.lbl}</div><div class="orient-period-n">0</div><div class="orient-period-lbl">sin datos</div></div>`;
+    const wC=Math.round(pC/pT*100),wE=Math.round(pE/pT*100),wN=100-wC-wE;
+    const ratio=pC>pE?`+${pC-pE} ciudadano`:pE>pC?`+${pE-pC} Estado`:'equilibrado';
+    const trendCls=pC>pE?'favor-c':pE>pC?'favor-e':'favor-n';
+    return`<div class="orient-period" title="${p.lbl}: ${pT} criterios">
+      <div class="orient-period-yr">${p.lbl}</div>
+      <div class="orient-period-n">${pT}</div>
+      <div class="orient-period-lbl">criterios</div>
+      <div class="orient-period-bar"><div class="ciu" style="width:${wC}%"></div><div class="est" style="width:${wE}%"></div><div class="neu" style="width:${wN}%"></div></div>
+      <div class="orient-period-trend ${trendCls}">${ratio}</div>
+    </div>`;
+  }).join('')}</div>`;
+
+  /* drill list */
+  const active=st.orientFilter;
+  const listItems=active?scored.filter(x=>x.s.favor===active):scored;
+  const listTitle=active==='C'?'Criterios pro-ciudadano':active==='E'?'Criterios pro-Estado':'Todos los criterios';
+  const drillRows=listItems.slice(0,40).map(({d,gi,s})=>{
+    const kws=[...s.kc.map(k=>`<span class="orient-kw ciu">${esc(k)}</span>`),...s.ke.map(k=>`<span class="orient-kw est">${esc(k)}</span>`)].join('');
+    const favor=s.favor==='C'?'pro-ciudadano':s.favor==='E'?'pro-Estado':'neutral';
+    return`<div class="orient-drill-item" onclick="openItem(${gi})">
+      <div class="orient-drill-meta"><span class="orient-kw ${s.favor==='C'?'ciu':s.favor==='E'?'est':'neu'}">${favor}</span><span class="bdg bdg-${d.tipo}" style="font-size:10px">${d.tipo}</span><span class="bdg bdg-${d.source}" style="font-size:10px">${d.source}</span><span style="font-size:11px;color:var(--g500)">${d.year||'?'}</span>${kws}</div>
+      <div class="orient-drill-rub">${esc(d.rubro.length>120?d.rubro.slice(0,120)+'…':d.rubro)}</div>
+    </div>`;
+  }).join('');
+  const drillMore=listItems.length>40?`<div style="padding:8px 0;font-size:11px;color:var(--g400);text-align:center">Mostrando 40 de ${listItems.length}. Usa filtros para acotar.</div>`:'';
+  const drillHtml=`<div class="orient-drill">
+    <div class="orient-drill-hdr">
+      <div><div class="orient-drill-title">${listTitle}</div><div class="orient-drill-sub">${listItems.length} criterio${listItems.length!==1?'s':''} · haz clic para leer el texto completo</div></div>
+      ${active?`<button class="fchip-all" onclick="toggleOrientFilter(null)">Ver todos</button>`:''}
+    </div>
+    ${drillRows||'<div class="orient-empty">Sin criterios en esta categoría para el filtro actual.</div>'}
+    ${drillMore}
+  </div>`;
+
+  document.getElementById('vw').innerHTML=`<div class="v-scroll"><div class="orient-view">
+    <div class="orient-hdr">
+      <h2>Orientación jurídica · ¿En favor de quién?</h2>
+      <p>Análisis del contenido de cada criterio para determinar si la jurisprudencia favorece al ciudadano, al Estado, o resulta de carácter técnico-neutral. Basado en análisis de rubro, criterio jurídico e implicación de los ${tot} criterios activos.</p>
+    </div>
+    <div class="orient-note"><strong>Metodología:</strong> Se identifican señales textuales en cada criterio: palabras clave que amplían derechos del particular (pro-ciudadano) versus las que limitan o restringen la procedencia de la reclamación (pro-Estado). Los criterios que no contienen señales claras en ningún sentido se clasifican como <em>neutral/técnico</em> (usualmente criterios de competencia, procedimiento formal o definiciones). <strong>Haz clic en cualquier criterio para leer su texto completo.</strong></div>
+    ${sumHtml}${meterHtml}${yrHtml}
+    <div style="font-size:11.5px;font-weight:700;color:var(--g600);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Por etapa histórica</div>
+    ${periodHtml}
+    ${drillHtml}
+  </div></div>`;
+}
+function toggleOrientFilter(f){
+  st.orientFilter=(st.orientFilter===f?null:f);
+  renderOrientacion();
 }
 
 document.addEventListener('keydown',ev=>{
