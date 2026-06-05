@@ -5,664 +5,294 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RPE — Responsabilidad Patrimonial del Estado</title>
 <style>
+/* ─ Tokens ─────────────────────────────────────────────── */
 :root{
-  /* Palette */
-  --bg:#F2F4F7;
+  --bg:#F4F6F9;
   --sf:#FFFFFF;
-  --sf2:#F8FAFB;
-  --bd:#E4E9F0;
-  --bd2:#D0D8E4;
-  --tx:#0F1923;
-  --tx2:#3B4A5C;
-  --mu:#7A8898;
-  --mu2:#A8B4C0;
-  /* Accent */
-  --ac:#4F46E5;
-  --ac-lt:#EEEFFE;
-  --ac-dk:#3730A3;
-  /* Source colors */
-  --scjn:#1D5FAD;
-  --scjn-lt:#DBEAFE;
-  --scjn-bar:#2563EB;
-  --tfja:#6D28D9;
-  --tfja-lt:#EDE9FE;
-  --tfja-bar:#7C3AED;
-  /* Tipo colors */
-  --j-c:#B91C1C;--j-bg:#FEF2F2;
-  --ta-c:#1558A8;--ta-bg:#EFF6FF;
-  --p-c:#A16207;--p-bg:#FFFBEB;
-  /* Radii */
-  --r2:2px;--r:6px;--r8:8px;--r12:12px;--rF:999px;
-  /* Shadows */
-  --sh0:0 1px 3px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04);
+  --sf2:#F8FAFC;
+  --bd:#E1E7EF;
+  --bd2:#C8D4E2;
+  --tx:#0C1A2E;
+  --tx2:#2D4059;
+  --mu:#6B7B8E;
+  --mu2:#9DAEBF;
+  /* SCJN blue family */
+  --b900:#0B2D5C;
+  --b700:#1558A8;
+  --b600:#1A6DC4;
+  --b500:#2580D8;
+  --b100:#DBEAFE;
+  --b050:#EBF4FF;
+  /* Fuentes */
+  --scjn:#1558A8; --scjn-bar:#1D5FAD;
+  --tfja:#0369A1; --tfja-bar:#0284C7;
+  /* Tipo */
+  --j-c:#991B1B; --j-bg:#FEF2F2;
+  --ta-c:#1558A8; --ta-bg:#EBF4FF;
+  --p-c:#92400E; --p-bg:#FFFBEB;
+  /* Radii & shadow */
+  --r:6px; --r8:8px; --r12:12px; --rF:999px;
+  --sh0:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.04);
   --sh1:0 2px 8px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.04);
-  --shF:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);
+  --shF:0 8px 28px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.06);
   /* Layout */
-  --sb:232px;
-  --lp:276px;
-  --hh:52px;
-  /* Type scale */
-  --f11:.6875rem;
-  --f13:.8125rem;
-  --f15:.9375rem;
-  --f17:1.0625rem;
-  --f20:1.25rem;
-  --f24:1.5rem;
+  --sb:216px; --lp:272px; --hh:52px;
+  /* Type */
+  --f10:.625rem; --f12:.75rem; --f13:.8125rem;
+  --f15:.9375rem; --f17:1.0625rem; --f20:1.25rem; --f24:1.5rem;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{
-  font-family:-apple-system,'Inter','Segoe UI',system-ui,sans-serif;
-  font-size:var(--f13);line-height:1.5;color:var(--tx);background:var(--bg);
-  -webkit-font-smoothing:antialiased;
-}
+body{font-family:-apple-system,'Inter','Segoe UI',system-ui,sans-serif;font-size:var(--f13);line-height:1.5;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased;}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 a{color:inherit;text-decoration:none}
 input{font-family:inherit}
 
-/* ═══════════════════ SHELL ═══════════════════ */
 .app{display:grid;grid-template-rows:auto 1fr;height:100vh;overflow:hidden}
 
-/* ═══════════════════ HEADER ═══════════════════ */
-.hdr{
-  background:var(--sf);
-  border-bottom:1px solid var(--bd);
-  flex-shrink:0;
-  z-index:10;
-}
-.hdr-top{
-  display:flex;align-items:center;gap:10px;
-  padding:0 16px;height:var(--hh);
-}
-.hdr-menu{
-  display:none;width:32px;height:32px;
-  border-radius:var(--r);background:var(--sf2);
-  color:var(--tx2);align-items:center;justify-content:center;
-  flex-shrink:0;transition:background .12s;
-}
-.hdr-menu:hover{background:var(--bd)}
-.hdr-icon{
-  width:32px;height:32px;border-radius:var(--r8);
-  background:var(--ac);color:#fff;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.hdr-title{
-  flex:1;min-width:0;
-  display:flex;flex-direction:column;gap:0px;
-}
-.hdr-title h1{
-  font-size:var(--f15);font-weight:700;letter-spacing:-.02em;
-  color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.hdr-title p{
-  font-size:var(--f11);color:var(--mu);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;
-}
-.hdr-stats{
-  display:flex;align-items:stretch;gap:0;margin-left:auto;
-  border:1px solid var(--bd);border-radius:var(--r8);overflow:hidden;flex-shrink:0;
-}
-.hs{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:4px 14px;border-right:1px solid var(--bd);
-}
-.hs:last-child{border-right:none}
-.hs-v{font-size:var(--f17);font-weight:800;letter-spacing:-.03em;color:var(--tx);line-height:1.1}
-.hs-l{font-size:.6rem;color:var(--mu);margin-top:1px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
-.hs.j .hs-v{color:#C53030}
-.hs.p .hs-v{color:#B7791F}
-.hs.ta .hs-v{color:#2B6CB0}
-.hdr-leyes-btn{
-  display:flex;align-items:center;gap:5px;
-  padding:0 12px;height:32px;
-  border:1px solid var(--bd);border-radius:var(--r);
-  font-size:var(--f13);color:var(--tx2);
-  background:var(--sf2);
-  transition:all .12s;white-space:nowrap;flex-shrink:0;margin-left:8px;
-}
-.hdr-leyes-btn:hover,.hdr-leyes-btn.active{
-  background:var(--ac-lt);border-color:var(--ac);color:var(--ac);
-}
+/* ════ HEADER ════ */
+.hdr{background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0}
+.hdr-inner{display:flex;align-items:center;gap:10px;padding:0 16px;height:var(--hh);}
+.hdr-menu{display:none;width:32px;height:32px;border-radius:var(--r);color:var(--mu);align-items:center;justify-content:center;flex-shrink:0;transition:background .1s;}
+.hdr-menu:hover{background:var(--sf2)}
+.hdr-logo{width:30px;height:30px;border-radius:var(--r);background:var(--b700);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hdr-texts{min-width:0;flex:1;}
+.hdr-texts h1{font-size:var(--f15);font-weight:700;letter-spacing:-.02em;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hdr-texts p{font-size:var(--f10);color:var(--mu);white-space:nowrap;margin-top:1px}
+.hdr-pills{display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.hp{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--rF);font-size:var(--f12);border:1px solid var(--bd);background:var(--sf2);}
+.hp-v{font-weight:700;color:var(--tx)}.hp-l{color:var(--mu)}
+.hp.hi .hp-v{color:var(--b700)}.hp.hj .hp-v{color:var(--j-c)}
+.btn-leyes{display:flex;align-items:center;gap:5px;padding:0 12px;height:30px;border-radius:var(--rF);border:1px solid var(--bd);background:var(--sf2);font-size:var(--f12);color:var(--mu);transition:all .12s;white-space:nowrap;flex-shrink:0;margin-left:6px;}
+.btn-leyes:hover,.btn-leyes.active{background:var(--b050);border-color:var(--b700);color:var(--b700);}
+.hdr-spark{height:22px;background:var(--sf2);border-top:1px solid var(--bd);display:flex;align-items:flex-end;gap:1.5px;padding:3px 16px 0;}
+.yb{flex:1;min-height:3px;background:var(--b100);border-radius:1px 1px 0 0;transition:background .12s;cursor:default;position:relative;}
+.yb:hover{background:var(--b700)}
+.yb:hover::after{content:attr(title);position:absolute;bottom:calc(100%+4px);left:50%;transform:translateX(-50%);background:var(--b900);color:#fff;padding:2px 7px;border-radius:var(--r);font-size:.58rem;white-space:nowrap;pointer-events:none;z-index:30;}
 
-/* Sparkline bar under header */
-.hdr-bar{
-  height:28px;border-top:1px solid var(--bd);
-  display:flex;align-items:flex-end;gap:2px;
-  padding:4px 16px 4px;overflow:hidden;
-  background:var(--sf2);
-}
-.yb{
-  flex:1;min-height:2px;background:var(--ac-lt);
-  border-radius:1px 1px 0 0;transition:background .12s;
-  position:relative;cursor:default;
-}
-.yb:hover{background:var(--ac)}
-.yb:hover::after{
-  content:attr(title);position:absolute;bottom:calc(100% + 4px);left:50%;
-  transform:translateX(-50%);background:var(--tx);color:#fff;
-  padding:2px 6px;border-radius:var(--r2);font-size:.6rem;
-  white-space:nowrap;pointer-events:none;z-index:20;
-}
-.hdr-bar-labels{
-  display:flex;justify-content:space-between;
-  padding:0 16px 3px;font-size:.55rem;color:var(--mu2);
-  background:var(--sf2);border-bottom:1px solid var(--bd);
-}
+/* ════ BODY ════ */
+.body{display:grid;grid-template-columns:var(--sb) 1fr;overflow:hidden;min-height:0}
 
-/* ═══════════════════ BODY GRID ═══════════════════ */
-.body{
-  display:grid;
-  grid-template-columns:var(--sb) 1fr;
-  overflow:hidden;min-height:0;
-}
+/* ════ SIDEBAR — ultra-clean ════ */
+.sidebar{background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden;min-height:0;transition:transform .22s cubic-bezier(.4,0,.2,1);}
+.sb-scroll{overflow-y:auto;flex:1;min-height:0}
+.sb-scroll::-webkit-scrollbar{width:3px}
+.sb-scroll::-webkit-scrollbar-track{background:transparent}
+.sb-scroll::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
 
-/* ═══════════════════ SIDEBAR ═══════════════════ */
-.sidebar{
-  background:var(--sf);
-  border-right:1px solid var(--bd);
-  display:flex;flex-direction:column;overflow-y:auto;min-height:0;
-  transition:transform .25s cubic-bezier(.4,0,.2,1);
-}
-/* custom scrollbar */
-.sidebar::-webkit-scrollbar{width:4px}
-.sidebar::-webkit-scrollbar-track{background:transparent}
-.sidebar::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
-
-.sb-search{padding:10px 12px 6px}
-.sb-inp-wrap{
-  display:flex;align-items:center;gap:6px;
-  background:var(--sf2);border:1px solid var(--bd);
-  border-radius:var(--r8);padding:6px 10px;
-  transition:border .12s,box-shadow .12s;
-}
-.sb-inp-wrap:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-lt)}
-.sb-ico{color:var(--mu2);flex-shrink:0;display:flex}
-.sb-inp{
-  flex:1;background:transparent;border:none;outline:none;
-  font-size:var(--f13);color:var(--tx);
-}
+/* Search — underline only */
+.sb-srch{padding:12px 14px 8px}
+.sb-srch-row{display:flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--bd);padding-bottom:7px;transition:border-color .12s;}
+.sb-srch-row:focus-within{border-color:var(--b700)}
+.sb-ico{color:var(--mu2);display:flex;flex-shrink:0}
+.sb-inp{flex:1;border:none;outline:none;background:transparent;font-size:var(--f13);color:var(--tx);}
 .sb-inp::placeholder{color:var(--mu2)}
 
-.sb-sec{padding:8px 0 4px;border-top:1px solid var(--bd);margin-top:4px}
-.sb-sec:first-of-type{margin-top:0;border-top:none}
-.sb-hdr{
-  display:flex;align-items:center;gap:5px;
-  padding:0 12px 4px;
-  font-size:var(--f11);font-weight:700;text-transform:uppercase;
-  letter-spacing:.08em;color:var(--mu);
-}
-.sb-hdr-ico{display:flex;color:var(--mu2)}
-.fi{
-  display:flex;align-items:center;gap:7px;
-  padding:5px 12px;cursor:pointer;
-  transition:background .1s;border-radius:0;
-}
-.fi:hover{background:var(--sf2)}
-.fi input{
-  width:14px;height:14px;flex-shrink:0;cursor:pointer;
-  accent-color:var(--ac);border-radius:var(--r2);
-}
-.fi-dot{
-  width:7px;height:7px;border-radius:50%;flex-shrink:0;
-}
-.fi-dot.SCJN{background:var(--scjn-bar)}
-.fi-dot.TFJA{background:var(--tfja-bar)}
-.fi-dot.all{background:var(--mu2)}
-.fi-dot.J{background:var(--j-c)}
-.fi-dot.P{background:var(--p-c)}
-.fi-dot.TA{background:var(--ta-c)}
-.fi-dot.Pleno{background:#047857}
-.fi-dot.s1{background:var(--scjn)}
-.fi-dot.s2{background:#1E7FB8}
-.fi-dot.SS{background:var(--tfja)}
-.fi-lbl{font-size:var(--f13);flex:1;color:var(--tx2)}
-.fi-cnt{
-  font-size:var(--f11);color:var(--mu2);
-  font-variant-numeric:tabular-nums;
-  background:var(--sf2);padding:1px 6px;
-  border-radius:var(--rF);border:1px solid var(--bd);
-}
+/* Section groups — no borders between items, just label + items */
+.sb-g{padding:10px 0 2px}
+.sb-g+.sb-g{border-top:1px solid var(--bd)}
+.sb-g-lbl{padding:0 14px 3px;font-size:var(--f10);font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mu2);}
 
-.yr-row{display:flex;align-items:center;gap:6px;padding:5px 12px 8px}
-.yr-in{
-  width:56px;padding:4px 8px;
-  background:var(--sf2);border:1px solid var(--bd);
-  border-radius:var(--r);color:var(--tx);font-size:var(--f13);
-  text-align:center;outline:none;transition:border .12s;
-}
-.yr-in:focus{border-color:var(--ac)}
-.yr-sep{font-size:var(--f13);color:var(--mu)}
+/* Filter rows — just checkbox + text + count */
+.fi{display:flex;align-items:center;padding:5px 14px;cursor:pointer;transition:background .08s;}
+.fi:hover{background:var(--b050)}
+.fi input{width:13px;height:13px;flex-shrink:0;cursor:pointer;accent-color:var(--b700);margin-right:8px;}
+.fi-lbl{font-size:var(--f13);color:var(--tx2);flex:1;}
+.fi-cnt{font-size:var(--f10);color:var(--mu2);font-variant-numeric:tabular-nums;}
 
-.sb-foot{padding:10px 12px;margin-top:auto;border-top:1px solid var(--bd)}
-.clear-btn{
-  width:100%;padding:7px;
-  background:var(--sf2);border:1px solid var(--bd);
-  border-radius:var(--r8);font-size:var(--f13);color:var(--mu);
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  transition:all .12s;
-}
-.clear-btn:hover{background:#FEF2F2;border-color:#FECACA;color:#DC2626}
+/* Year range */
+.sb-yr{display:flex;align-items:center;gap:6px;padding:5px 14px 10px}
+.yr-in{width:52px;padding:3px 6px;border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:var(--f12);text-align:center;outline:none;transition:border .12s;}
+.yr-in:focus{border-color:var(--b700)}
+.yr-sep{font-size:var(--f12);color:var(--mu2)}
 
-/* Backdrops */
-.backdrop{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.35);z-index:99;
-  backdrop-filter:blur(1px);
-}
+/* Footer */
+.sb-foot{padding:10px 14px;border-top:1px solid var(--bd);flex-shrink:0}
+.clear-btn{width:100%;padding:6px;border-radius:var(--r);font-size:var(--f12);color:var(--mu);border:1px solid var(--bd);background:transparent;transition:all .12s;}
+.clear-btn:hover{border-color:var(--b700);color:var(--b700);background:var(--b050)}
+
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:99;backdrop-filter:blur(1px)}
 .backdrop.show{display:block}
 
-/* ═══════════════════ CONTENT ═══════════════════ */
+/* ════ CONTENT ════ */
 .content{display:grid;grid-template-rows:auto auto 1fr;overflow:hidden;min-height:0}
-
-/* Toolbar */
-.toolbar{
-  background:var(--sf);border-bottom:1px solid var(--bd);
-  padding:0 14px;display:flex;align-items:center;gap:2px;
-  height:40px;flex-shrink:0;overflow-x:auto;scrollbar-width:none;
-}
+.toolbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 14px;display:flex;align-items:center;height:40px;flex-shrink:0;overflow-x:auto;scrollbar-width:none;gap:0;}
 .toolbar::-webkit-scrollbar{display:none}
-.vtab{
-  display:flex;align-items:center;gap:5px;
-  padding:0 12px;height:40px;
-  font-size:var(--f13);font-weight:500;color:var(--mu);
-  border-bottom:2px solid transparent;
-  white-space:nowrap;transition:all .12s;flex-shrink:0;
-  border-radius:0;
-}
+.vtab{display:flex;align-items:center;gap:5px;padding:0 12px;height:40px;font-size:var(--f13);font-weight:500;color:var(--mu);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:color .12s,border-color .12s;}
 .vtab:hover{color:var(--tx2)}
-.vtab.active{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}
-.vtab svg{flex-shrink:0}
-.tb-div{width:1px;height:18px;background:var(--bd);flex-shrink:0;margin:0 4px}
-.count-badge{
-  margin-left:auto;flex-shrink:0;
-  padding:2px 9px;background:var(--ac-lt);color:var(--ac);
-  border-radius:var(--rF);font-size:var(--f11);font-weight:700;
-}
+.vtab.active{color:var(--b700);border-bottom-color:var(--b700);font-weight:600}
+.tb-sep{width:1px;height:18px;background:var(--bd);margin:0 4px;flex-shrink:0}
+.result-cnt{margin-left:auto;font-size:var(--f12);color:var(--mu);flex-shrink:0;font-variant-numeric:tabular-nums;}
 
-/* Filter chips bar */
-.fchips{
-  background:var(--sf);border-bottom:1px solid var(--bd);
-  padding:0 14px;display:flex;align-items:center;gap:4px;
-  overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-height:0;
-}
+.fchips{background:var(--sf2);border-bottom:1px solid var(--bd);padding:0 14px;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-height:0;}
 .fchips::-webkit-scrollbar{display:none}
-.fchip{
-  display:inline-flex;align-items:center;gap:3px;
-  padding:3px 8px;background:var(--ac-lt);color:var(--ac);
-  border-radius:var(--rF);font-size:var(--f11);font-weight:600;
-  white-space:nowrap;flex-shrink:0;border:1px solid rgba(79,70,229,.18);
-}
-.fchip-x{
-  width:14px;height:14px;display:flex;align-items:center;justify-content:center;
-  color:var(--ac);opacity:.6;cursor:pointer;padding:0;flex-shrink:0;
-  border-radius:50%;transition:opacity .1s;
-}
-.fchip-x:hover{opacity:1;background:rgba(79,70,229,.15)}
+.fchip{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:2px 8px;border-radius:var(--rF);background:var(--b050);border:1px solid var(--b100);color:var(--b700);font-size:var(--f10);font-weight:600;white-space:nowrap;}
+.fchip-x{display:flex;align-items:center;width:12px;height:12px;border-radius:50%;color:var(--b700);opacity:.5;cursor:pointer;padding:0;transition:opacity .1s;}
+.fchip-x:hover{opacity:1}
 
-/* Views wrap */
 .views-wrap{overflow:hidden;min-height:0;position:relative}
 
-/* ═══════════════════ LISTA LAYOUT ═══════════════════ */
+/* ════ LISTA ════ */
 .lista-layout{display:grid;grid-template-columns:var(--lp) 1fr;height:100%;overflow:hidden}
-.list-panel{
-  display:flex;flex-direction:column;
-  border-right:1px solid var(--bd);
-  background:var(--sf2);overflow:hidden;
-}
-.list-scroll{overflow-y:auto;flex:1;min-height:0;scroll-behavior:smooth}
-.list-scroll::-webkit-scrollbar{width:4px}
-.list-scroll::-webkit-scrollbar-track{background:transparent}
-.list-scroll::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
-.list-foot{border-top:1px solid var(--bd);background:var(--sf);flex-shrink:0}
+.list-panel{display:flex;flex-direction:column;border-right:1px solid var(--bd);background:var(--sf);overflow:hidden;}
+.list-scroll{overflow-y:auto;flex:1;min-height:0}
+.list-scroll::-webkit-scrollbar{width:3px}.list-scroll::-webkit-scrollbar-track{background:transparent}.list-scroll::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.list-foot{border-top:1px solid var(--bd);background:var(--sf2);flex-shrink:0}
+.detail-panel{overflow-y:auto;background:var(--sf);display:flex;flex-direction:column;transition:transform .22s cubic-bezier(.4,0,.2,1);}
+.detail-panel::-webkit-scrollbar{width:4px}.detail-panel::-webkit-scrollbar-track{background:transparent}.detail-panel::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
 
-.detail-panel{
-  overflow-y:auto;background:var(--sf);
-  display:flex;flex-direction:column;
-  transition:transform .25s cubic-bezier(.4,0,.2,1);
-}
-.detail-panel::-webkit-scrollbar{width:5px}
-.detail-panel::-webkit-scrollbar-track{background:transparent}
-.detail-panel::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
-
-/* ── List items ── */
-.li{
-  display:flex;cursor:pointer;
-  border-bottom:1px solid var(--bd);
-  transition:background .1s;position:relative;background:var(--sf);
-}
-.li:hover{background:#F0F4FF}
-.li.sel{background:#EEF2FF}
-.li.sel::after{
-  content:'';position:absolute;right:0;top:0;bottom:0;
-  width:2px;background:var(--ac);
-}
+.li{display:flex;cursor:pointer;border-bottom:1px solid var(--bd);transition:background .08s;position:relative;background:var(--sf);}
+.li:hover{background:var(--b050)}
+.li.sel{background:#EBF4FF}
+.li.sel::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--b700)}
 .li-bar{width:3px;flex-shrink:0;align-self:stretch}
-.li-bar.SCJN{background:var(--scjn-bar)}
-.li-bar.TFJA{background:var(--tfja-bar)}
+.li-bar.SCJN{background:var(--scjn-bar)}.li-bar.TFJA{background:var(--tfja-bar)}
 .li-body{padding:9px 11px;flex:1;min-width:0}
-.li-row1{display:flex;align-items:center;gap:4px;margin-bottom:3px}
-.tipo-dot{
-  width:6px;height:6px;border-radius:50%;flex-shrink:0;
-}
-.tipo-dot.J{background:var(--j-c)}
-.tipo-dot.P{background:var(--p-c)}
-.tipo-dot.TA{background:var(--ta-c)}
-.li-tipo{font-size:var(--f11);font-weight:700;color:var(--mu)}
-.li-src{
-  font-size:var(--f11);color:var(--mu2);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.li-yr{
-  font-size:var(--f11);color:var(--mu);
-  margin-left:auto;flex-shrink:0;font-weight:600;
-  font-variant-numeric:tabular-nums;
-}
-.li-rub{
-  font-size:var(--f13);line-height:1.42;color:var(--tx);font-weight:500;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  margin-bottom:4px;
-}
+.li-meta{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.li-tipo{font-size:var(--f10);font-weight:700;letter-spacing:.04em;padding:1px 5px;border-radius:var(--r);flex-shrink:0;}
+.li-tipo.J{background:var(--j-bg);color:var(--j-c)}.li-tipo.TA{background:var(--ta-bg);color:var(--ta-c)}.li-tipo.P{background:var(--p-bg);color:var(--p-c)}
+.li-src{font-size:var(--f10);color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.li-yr{font-size:var(--f10);color:var(--mu2);margin-left:auto;flex-shrink:0;font-variant-numeric:tabular-nums;font-weight:600}
+.li-rub{font-size:var(--f13);line-height:1.45;color:var(--tx);font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;}
 .li-tags{display:flex;flex-wrap:wrap;gap:2px}
-.tc-pill{
-  font-size:.6rem;padding:1px 6px;border-radius:var(--rF);
-  background:var(--ac-lt);color:var(--ac);white-space:nowrap;
-}
+.tp{font-size:.58rem;padding:1px 5px;border-radius:var(--rF);background:var(--b050);color:var(--b700)}
 
-/* Pagination */
-.pager{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px}
-.pg-btn{
-  padding:4px 12px;border:1px solid var(--bd);background:var(--sf);
-  border-radius:var(--r);font-size:var(--f13);color:var(--tx2);transition:all .12s;
-}
-.pg-btn:hover:not([disabled]){background:var(--ac);color:#fff;border-color:var(--ac)}
+.pager{display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px}
+.pg-btn{padding:4px 12px;border:1px solid var(--bd);background:var(--sf);border-radius:var(--r);font-size:var(--f12);color:var(--tx2);transition:all .12s;}
+.pg-btn:hover:not([disabled]){background:var(--b700);color:#fff;border-color:var(--b700)}
 .pg-btn[disabled]{opacity:.3;cursor:default}
-.pg-info{font-size:var(--f11);color:var(--mu);font-variant-numeric:tabular-nums}
-.kb-hint{
-  padding:3px 8px;text-align:center;font-size:.6rem;color:var(--mu2);
-  border-top:1px solid var(--bd);background:var(--sf2);
-}
-kbd{
-  background:var(--sf2);border:1px solid var(--bd2);
-  border-radius:var(--r2);padding:0 3px;font-size:.6rem;
-}
+.pg-info{font-size:var(--f12);color:var(--mu);font-variant-numeric:tabular-nums}
+.kb-hint{text-align:center;font-size:.58rem;color:var(--mu2);padding:2px 8px 5px;border-top:1px solid var(--bd)}
+kbd{background:var(--sf2);border:1px solid var(--bd2);border-radius:var(--r);padding:0 3px;font-size:.58rem}
 
-/* ── Detail panel ── */
-.d-back{
-  display:none;align-items:center;gap:6px;
-  padding:10px 14px;background:var(--sf);border-bottom:1px solid var(--bd);
-  font-size:var(--f13);color:var(--mu);cursor:pointer;flex-shrink:0;
-  position:sticky;top:0;z-index:2;
-}
-.d-back:hover{color:var(--ac)}
-.d-empty{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:12px;padding:32px;text-align:center;color:var(--mu2);
-}
-.d-empty-svg{opacity:.12}
-.d-empty-text{font-size:var(--f13);line-height:1.55;max-width:200px}
-.d-content{padding:20px 24px 32px;max-width:660px}
+/* ════ DETAIL ════ */
+.d-back{display:none;align-items:center;gap:6px;padding:10px 16px;background:var(--sf);border-bottom:1px solid var(--bd);font-size:var(--f13);color:var(--mu);cursor:pointer;flex-shrink:0;position:sticky;top:0;z-index:2;}
+.d-back:hover{color:var(--b700)}
+.d-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px;text-align:center;}
+.d-empty-ico{color:var(--b100)}
+.d-empty-txt{font-size:var(--f13);color:var(--mu2);max-width:200px;line-height:1.55}
+.d-content{padding:22px 26px 36px;max-width:660px}
 
-/* Detail header */
-.d-src-bar{
-  display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap;
-}
-.badge{
-  display:inline-flex;align-items:center;
-  padding:2px 8px;border-radius:var(--rF);
-  font-size:var(--f11);font-weight:700;
-}
-.badge.J{background:var(--j-bg);color:var(--j-c)}
-.badge.P{background:var(--p-bg);color:var(--p-c)}
-.badge.TA{background:var(--ta-bg);color:var(--ta-c)}
-.badge.SCJN{background:var(--scjn-lt);color:var(--scjn)}
-.badge.TFJA{background:var(--tfja-lt);color:var(--tfja)}
-.badge.sala{background:var(--sf2);color:var(--tx2);border:1px solid var(--bd)}
-.badge.yr{background:var(--sf2);color:var(--mu);border:1px solid var(--bd)}
-.d-clave{
-  margin-left:auto;font-family:ui-monospace,'SF Mono',monospace;
-  font-size:var(--f11);color:var(--mu2);
-}
+.d-badges{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.db{padding:2px 8px;border-radius:var(--rF);font-size:var(--f10);font-weight:700;}
+.db.J{background:var(--j-bg);color:var(--j-c)}.db.P{background:var(--p-bg);color:var(--p-c)}.db.TA{background:var(--ta-bg);color:var(--ta-c)}
+.db.SCJN{background:var(--b100);color:var(--b700)}.db.TFJA{background:#E0F2FE;color:var(--tfja)}
+.db.sala{background:var(--sf2);color:var(--tx2);border:1px solid var(--bd)}.db.yr{background:var(--sf2);color:var(--mu);border:1px solid var(--bd)}
+.d-clave{font-family:ui-monospace,'SF Mono',monospace;font-size:var(--f10);color:var(--mu2);margin-left:auto}
 
-.d-rub{
-  font-size:var(--f17);font-weight:700;line-height:1.42;
-  letter-spacing:-.02em;color:var(--tx);margin-bottom:6px;
-}
-.d-rub a{color:var(--scjn)}
-.d-rub a:hover{text-decoration:underline}
+.d-rub{font-size:var(--f17);font-weight:700;line-height:1.42;letter-spacing:-.02em;color:var(--tx);margin-bottom:8px}
+.d-rub a{color:var(--b700)}.d-rub a:hover{text-decoration:underline}
 
-.d-tema-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px}
-.dtag{
-  font-size:var(--f13);padding:3px 10px;border-radius:var(--rF);
-  background:var(--ac-lt);color:var(--ac);font-weight:500;
-  border:1px solid rgba(79,70,229,.15);cursor:pointer;
-  transition:background .1s;
-}
-.dtag:hover{background:var(--ac);color:#fff}
+.d-temas{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:18px}
+.dtm{font-size:var(--f12);padding:3px 10px;border-radius:var(--rF);background:var(--b050);color:var(--b700);border:1px solid var(--b100);cursor:pointer;transition:background .1s;}
+.dtm:hover{background:var(--b700);color:#fff;border-color:var(--b700)}
 
-/* Detail sections */
-.d-secs{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.d-sec{border:1px solid var(--bd);border-radius:var(--r8);overflow:hidden}
-.d-sec-h{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 12px;background:var(--sf2);border-bottom:1px solid var(--bd);
-}
-.d-sec-ico{display:flex;color:var(--ac);flex-shrink:0}
-.d-sec-lbl{font-size:var(--f11);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tx2)}
+.d-secs{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.d-sec{border-radius:var(--r8);overflow:hidden;border:1px solid var(--bd)}
+.d-sec-h{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--sf2);border-bottom:1px solid var(--bd);}
+.d-sec-ico{display:flex;color:var(--b700);flex-shrink:0}
+.d-sec-lbl{font-size:var(--f10);font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tx2)}
 .d-sec-txt{padding:10px 12px;font-size:var(--f13);color:var(--tx2);line-height:1.6}
 
-/* Ponente card */
-.d-pon{
-  display:flex;align-items:center;gap:12px;
-  border:1px solid var(--bd);border-radius:var(--r8);
-  padding:12px;margin-bottom:12px;background:var(--sf2);
-}
-.d-photo{
-  width:48px;height:48px;border-radius:50%;object-fit:cover;
-  border:2px solid var(--bd2);flex-shrink:0;background:var(--bd);
-}
-.pon-lbl{font-size:var(--f11);color:var(--mu);text-transform:uppercase;letter-spacing:.05em}
+.d-pon{display:flex;align-items:center;gap:12px;border:1px solid var(--bd);border-radius:var(--r8);padding:12px;margin-bottom:12px;}
+.d-photo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--b100);flex-shrink:0;background:var(--bd)}
+.pon-lbl{font-size:var(--f10);color:var(--mu);text-transform:uppercase;letter-spacing:.05em}
 .pon-name{font-size:var(--f15);font-weight:700;color:var(--tx);margin-top:1px}
-.pon-sala{font-size:var(--f11);color:var(--mu);margin-top:1px}
+.pon-sala{font-size:var(--f10);color:var(--mu)}
 
-/* Magistrados */
-.d-mags{
-  border:1px solid var(--bd);border-radius:var(--r8);
-  padding:10px 12px;margin-bottom:12px;background:var(--sf2);
-}
-.mags-hdr{
-  display:flex;align-items:center;gap:5px;
-  font-size:var(--f11);font-weight:700;color:var(--tfja);
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;
-}
-.mags-ch{display:flex;flex-wrap:wrap;gap:4px}
-.mc{
-  font-size:var(--f11);padding:2px 7px;border-radius:var(--rF);
-  background:var(--tfja-lt);color:var(--tfja);
-}
+.d-mags{border:1px solid var(--bd);border-radius:var(--r8);padding:10px 12px;margin-bottom:12px}
+.mags-lbl{font-size:var(--f10);font-weight:700;color:var(--tfja);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.mags-ch{display:flex;flex-wrap:wrap;gap:3px}
+.mc{font-size:var(--f10);padding:2px 7px;border-radius:var(--rF);background:#E0F2FE;color:var(--tfja)}
 
-/* APA block */
-.d-apa{
-  border:1px solid var(--bd);border-radius:var(--r8);
-  padding:10px 12px;margin-bottom:12px;background:var(--sf2);
-}
-.apa-row{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:5px;gap:8px;
-}
-.apa-lbl{
-  font-size:var(--f11);font-weight:700;color:var(--mu);
-  text-transform:uppercase;letter-spacing:.06em;
-}
-.copy-btn{
-  display:flex;align-items:center;gap:4px;
-  padding:3px 9px;background:var(--ac);color:#fff;
-  border-radius:var(--r);font-size:var(--f11);transition:background .12s;
-}
-.copy-btn:hover{background:var(--ac-dk)}
-.apa-body{font-size:var(--f11);color:var(--mu);font-style:italic;line-height:1.58;word-break:break-word}
+.d-apa{border:1px solid var(--bd);border-radius:var(--r8);padding:10px 12px;margin-bottom:14px}
+.apa-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:8px}
+.apa-lbl{font-size:var(--f10);font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mu)}
+.apa-copy{display:flex;align-items:center;gap:4px;padding:3px 9px;background:var(--b700);color:#fff;border-radius:var(--r);font-size:var(--f10);transition:background .12s;}
+.apa-copy:hover{background:var(--b600)}
+.apa-body{font-size:var(--f12);color:var(--mu);font-style:italic;line-height:1.58;word-break:break-word}
 
-/* Actions */
-.d-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.act{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:7px 16px;border-radius:var(--r8);font-size:var(--f13);font-weight:500;
-  transition:all .12s;
-}
-.act-primary{background:var(--ac);color:#fff}
-.act-primary:hover{background:var(--ac-dk)}
-.act-secondary{
-  background:var(--sf);color:var(--tx2);
-  border:1px solid var(--bd);
-}
-.act-secondary:hover{background:var(--sf2);border-color:var(--bd2)}
+.d-actions{display:flex;gap:6px;flex-wrap:wrap}
+.act{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r8);font-size:var(--f13);font-weight:500;transition:all .12s;}
+.act-p{background:var(--b700);color:#fff}.act-p:hover{background:var(--b600)}
+.act-s{background:var(--sf);color:var(--tx2);border:1px solid var(--bd)}.act-s:hover{background:var(--sf2);border-color:var(--bd2)}
 
-/* ═══════════════════ TEMAS VIEW ═══════════════════ */
+/* ════ TEMAS ════ */
 .temas-view{padding:16px;overflow-y:auto;height:100%}
-.v-hdr{margin-bottom:14px}
-.v-hdr h2{font-size:var(--f17);font-weight:700;color:var(--tx);letter-spacing:-.02em}
-.v-hdr p{font-size:var(--f13);color:var(--mu);margin-top:3px}
-.temas-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(185px,1fr));
-  gap:8px;
-}
-.tc-card{
-  background:var(--sf);border:1px solid var(--bd);
-  border-radius:var(--r12);padding:14px 16px;
-  cursor:pointer;transition:all .15s;
-}
-.tc-card:hover{box-shadow:var(--sh1);border-color:var(--bd2);transform:translateY(-1px)}
-.tc-n{font-size:var(--f24);font-weight:800;color:var(--ac);line-height:1;letter-spacing:-.04em}
-.tc-name{font-size:var(--f13);font-weight:600;color:var(--tx);margin:4px 0 2px;line-height:1.35}
-.tc-sub{font-size:var(--f11);color:var(--mu)}
+.v-head{margin-bottom:14px}
+.v-head h2{font-size:var(--f17);font-weight:700;color:var(--tx);letter-spacing:-.02em}
+.v-head p{font-size:var(--f12);color:var(--mu);margin-top:3px}
+.temas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
+.tc-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r12);padding:14px 16px;cursor:pointer;transition:all .15s;}
+.tc-card:hover{box-shadow:var(--sh1);border-color:var(--b500);transform:translateY(-1px)}
+.tc-n{font-size:var(--f24);font-weight:800;color:var(--b700);line-height:1;letter-spacing:-.04em}
+.tc-name{font-size:var(--f13);font-weight:600;color:var(--tx);margin:4px 0 2px;line-height:1.3}
+.tc-sub{font-size:var(--f10);color:var(--mu)}
 .tc-bar{height:2px;background:var(--bd);border-radius:1px;margin-top:10px}
-.tc-fill{height:100%;background:var(--ac);border-radius:1px;opacity:.5}
+.tc-fill{height:100%;background:var(--b500);border-radius:1px}
 
-/* Drilldown */
 .drilldown{padding:16px;overflow-y:auto;height:100%}
-.dd-back{
-  display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;
-  padding:5px 12px;border:1px solid var(--bd);border-radius:var(--r8);
-  background:var(--sf);font-size:var(--f13);color:var(--mu);cursor:pointer;transition:all .12s;
-}
-.dd-back:hover{color:var(--ac);border-color:var(--ac)}
+.dd-back{display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;padding:5px 12px;border:1px solid var(--bd);border-radius:var(--r8);background:var(--sf);font-size:var(--f13);color:var(--mu);cursor:pointer;transition:all .12s;}
+.dd-back:hover{color:var(--b700);border-color:var(--b700)}
 .dd-title{font-size:var(--f20);font-weight:700;color:var(--tx);margin-bottom:12px;letter-spacing:-.02em}
 .dd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:6px}
-.dd-item{
-  background:var(--sf);border:1px solid var(--bd);border-radius:var(--r8);
-  padding:10px 12px;cursor:pointer;transition:all .12s;
-}
-.dd-item:hover{border-color:var(--bd2);box-shadow:var(--sh0)}
+.dd-item{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r8);padding:10px 12px;cursor:pointer;transition:all .12s;}
+.dd-item:hover{border-color:var(--b500);box-shadow:var(--sh0)}
 .dd-meta{display:flex;gap:4px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
 .dd-rub{font-size:var(--f13);line-height:1.42;color:var(--tx)}
 
-/* ═══════════════════ TIMELINE VIEW ═══════════════════ */
+/* ════ TIMELINE ════ */
 .timeline-view{padding:16px 20px;overflow-y:auto;height:100%}
 .tl-yr{margin-bottom:20px}
-.tl-yr-hdr{
-  display:flex;align-items:center;gap:10px;margin-bottom:8px;
-}
-.tl-yr-lbl{
-  font-size:var(--f20);font-weight:800;color:var(--tx);
-  min-width:48px;letter-spacing:-.03em;line-height:1;
-}
+.tl-yr-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tl-yr-lbl{font-size:var(--f20);font-weight:800;color:var(--tx);min-width:48px;letter-spacing:-.03em}
 .tl-yr-line{flex:1;height:1px;background:var(--bd)}
-.tl-yr-cnt{font-size:var(--f11);color:var(--mu);white-space:nowrap}
-.tl-items{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:5px;
-  padding-left:12px;border-left:2px solid var(--bd);
-}
-.tl-item{
-  background:var(--sf);border:1px solid var(--bd);border-radius:var(--r8);
-  padding:8px 10px;cursor:pointer;transition:all .12s;
-}
-.tl-item:hover{border-color:var(--bd2);box-shadow:var(--sh0)}
+.tl-yr-cnt{font-size:var(--f10);color:var(--mu);white-space:nowrap}
+.tl-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:5px;padding-left:12px;border-left:2px solid var(--b100)}
+.tl-item{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r8);padding:8px 10px;cursor:pointer;transition:all .12s;}
+.tl-item:hover{border-color:var(--b500);box-shadow:var(--sh0)}
 .tl-meta{display:flex;gap:3px;align-items:center;margin-bottom:3px;flex-wrap:wrap}
 .tl-rub{font-size:var(--f13);line-height:1.4;color:var(--tx)}
 
-/* ═══════════════════ LEYES VIEW ═══════════════════ */
+/* ════ LEYES ════ */
 .leyes-view{padding:16px 20px;overflow-y:auto;height:100%}
-.leyes-inner{max-width:780px;margin:0 auto}
-.lw-note{
-  display:flex;align-items:flex-start;gap:10px;
-  background:#FFFBEB;border:1px solid #FDE68A;
-  border-radius:var(--r8);padding:10px 14px;margin-bottom:12px;
-  font-size:var(--f13);color:#92400E;line-height:1.55;
-}
-.lw-note-ico{flex-shrink:0;margin-top:1px;color:#B45309}
-.lw-card{
-  background:var(--sf);border:1px solid var(--bd);
-  border-radius:var(--r8);margin-bottom:8px;overflow:hidden;
-  box-shadow:var(--sh0);
-}
-.lw-hdr{
-  background:var(--sf2);border-bottom:1px solid var(--bd);
-  padding:8px 14px;display:flex;align-items:center;gap:8px;
-}
-.lw-badge{font-size:var(--f11);font-weight:700;padding:2px 7px;border-radius:var(--rF)}
-.lw-badge.cpeum{background:var(--scjn-lt);color:var(--scjn)}
-.lw-badge.lfrpe{background:var(--p-bg);color:var(--p-c)}
-.lw-title{font-weight:600;font-size:var(--f13);color:var(--tx);flex:1}
-.lw-pg{font-size:var(--f11);color:var(--mu);font-family:monospace}
-.lw-text{
-  margin:10px 14px;padding:10px 14px;
-  font-size:var(--f13);line-height:1.65;color:var(--tx2);
-  border-left:2px solid var(--ac);background:var(--ac-lt);
-  border-radius:0 var(--r) var(--r) 0;font-style:italic;
-}
-.lw-apa{
-  padding:6px 14px;border-top:1px solid var(--bd);
-  font-size:var(--f11);color:var(--mu);font-style:italic;line-height:1.5;
-}
+.leyes-inner{max-width:760px;margin:0 auto}
+.lw-note{background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--r8);padding:10px 14px;margin-bottom:12px;font-size:var(--f13);color:#92400E;line-height:1.55;}
+.lw-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r8);margin-bottom:8px;overflow:hidden}
+.lw-hdr{background:var(--sf2);border-bottom:1px solid var(--bd);padding:8px 14px;display:flex;align-items:center;gap:8px}
+.lw-badge{font-size:var(--f10);font-weight:700;padding:2px 7px;border-radius:var(--rF)}
+.lw-badge.cpeum{background:var(--b100);color:var(--b700)}.lw-badge.lfrpe{background:var(--p-bg);color:var(--p-c)}
+.lw-title{font-weight:600;font-size:var(--f13);color:var(--tx);flex:1}.lw-pg{font-size:var(--f10);color:var(--mu);font-family:monospace}
+.lw-q{margin:10px 14px;padding:10px 14px;font-size:var(--f13);line-height:1.65;color:var(--tx2);border-left:2px solid var(--b700);background:var(--b050);border-radius:0 var(--r) var(--r) 0;font-style:italic;}
+.lw-apa{padding:6px 14px;border-top:1px solid var(--bd);font-size:var(--f10);color:var(--mu);font-style:italic;line-height:1.5}
 
-/* ═══════════════════ TOAST ═══════════════════ */
-.toast{
-  position:fixed;bottom:20px;right:20px;
-  background:var(--tx);color:#fff;
-  padding:9px 16px;border-radius:var(--r8);
-  font-size:var(--f13);font-weight:500;
-  opacity:0;transform:translateY(6px);
-  transition:all .22s;pointer-events:none;z-index:999;
-  box-shadow:var(--shF);
-}
+/* ════ TOAST ════ */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--b900);color:#fff;padding:9px 16px;border-radius:var(--r8);font-size:var(--f13);font-weight:500;opacity:0;transform:translateY(6px);transition:all .2s;pointer-events:none;z-index:999;box-shadow:var(--shF);}
 .toast.show{opacity:1;transform:translateY(0)}
 
-/* ═══════════════════ RESPONSIVE ═══════════════════ */
+/* ════ RESPONSIVE ════ */
 @media(max-width:1099px){
-  :root{--sb:244px}
   .body{grid-template-columns:1fr}
-  .sidebar{
-    position:fixed;left:0;top:0;bottom:0;z-index:100;
-    transform:translateX(-100%);box-shadow:var(--shF);
-  }
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);box-shadow:var(--shF);}
   .sidebar.open{transform:translateX(0)}
   .hdr-menu{display:inline-flex}
-  .hdr-stats{display:none}
+  .hdr-pills{display:none}
   .lista-layout{grid-template-columns:1fr}
-  .detail-panel{
-    position:fixed;right:0;top:0;bottom:0;
-    width:min(480px,100vw);z-index:101;
-    background:var(--sf);transform:translateX(100%);
-    box-shadow:-4px 0 24px rgba(0,0,0,.12);
-    border-left:1px solid var(--bd);
-  }
+  .detail-panel{position:fixed;right:0;top:0;bottom:0;width:min(480px,100vw);z-index:101;background:var(--sf);transform:translateX(100%);box-shadow:-4px 0 24px rgba(0,0,0,.12);border-left:1px solid var(--bd);}
   .detail-panel.open{transform:translateX(0)}
   .d-back{display:flex}
 }
 @media(max-width:767px){
-  :root{--hh:48px}
-  .hdr-title h1{font-size:var(--f13)}
-  .hdr-title p{display:none}
-  .hdr-leyes-btn span{display:none}
-  .hdr-bar,.hdr-bar-labels{display:none}
-  .vtab span{display:none}
-  .vtab{padding:0 10px}
+  :root{--hh:46px}
+  .hdr-texts h1{font-size:var(--f13)}
+  .hdr-texts p{display:none}
+  .hdr-spark{display:none}
+  .vtab span{display:none}.vtab{padding:0 10px}
+  .btn-leyes span{display:none}
   .detail-panel{width:100vw}
   .d-content{padding:14px 14px 24px}
-  .d-rub{font-size:var(--f15)}
   .temas-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
-  .tl-items{grid-template-columns:1fr}
-  .dd-grid{grid-template-columns:1fr}
+  .tl-items{grid-template-columns:1fr}.dd-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -670,119 +300,74 @@ kbd{
 <div class="app">
 
 <header class="hdr">
-  <div class="hdr-top">
+  <div class="hdr-inner">
     <button class="hdr-menu" id="menuBtn" onclick="openSB()" aria-label="Filtros">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-    <div class="hdr-icon" aria-hidden="true">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/>
-        <path d="M12 2L2 7h20z"/>
-      </svg>
+    <div class="hdr-logo" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2L2 7h20z"/></svg>
     </div>
-    <div class="hdr-title">
+    <div class="hdr-texts">
       <h1>Responsabilidad Patrimonial del Estado</h1>
-      <p>SCJN &amp; TFJA · Sala Superior · Pleno · 2013–2026</p>
+      <p>SCJN · TFJA · Sala Superior · 2013–2026</p>
     </div>
-    <div class="hdr-stats" aria-label="Estadísticas">
-      <div class="hs"><span class="hs-v">259</span><span class="hs-l">Criterios</span></div>
-      <div class="hs"><span class="hs-v">99</span><span class="hs-l">SCJN</span></div>
-      <div class="hs"><span class="hs-v">160</span><span class="hs-l">TFJA</span></div>
-      <div class="hs j"><span class="hs-v">93</span><span class="hs-l">Jurispr.</span></div>
-      <div class="hs p"><span class="hs-v">0</span><span class="hs-l">Precedente</span></div>
-      <div class="hs ta"><span class="hs-v">166</span><span class="hs-l">TA</span></div>
+    <div class="hdr-pills">
+      <div class="hp hi"><span class="hp-v">259</span><span class="hp-l">criterios</span></div>
+      <div class="hp"><span class="hp-v">99</span><span class="hp-l">SCJN</span></div>
+      <div class="hp"><span class="hp-v">160</span><span class="hp-l">TFJA</span></div>
+      <div class="hp hj"><span class="hp-v">93</span><span class="hp-l">jurispr.</span></div>
     </div>
-    <button class="hdr-leyes-btn" id="btnLeyes" onclick="showLeyes()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <button class="btn-leyes" id="btnLeyes" onclick="showLeyes()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
       <span>Leyes</span>
     </button>
   </div>
-  <div class="hdr-bar" aria-label="Distribución por año 2013–2026">
-    <div class="yb" style="height:10%" title="2013: 10"></div><div class="yb" style="height:13%" title="2014: 14"></div><div class="yb" style="height:12%" title="2015: 13"></div><div class="yb" style="height:6%" title="2016: 6"></div><div class="yb" style="height:2%" title="2017: 2"></div><div class="yb" style="height:13%" title="2018: 14"></div><div class="yb" style="height:3%" title="2019: 3"></div><div class="yb" style="height:5%" title="2020: 5"></div><div class="yb" style="height:2%" title="2021: 2"></div><div class="yb" style="height:9%" title="2022: 9"></div><div class="yb" style="height:9%" title="2023: 9"></div><div class="yb" style="height:26%" title="2024: 27"></div><div class="yb" style="height:100%" title="2025: 105"></div><div class="yb" style="height:38%" title="2026: 40"></div>
-  </div>
-  <div class="hdr-bar-labels">
-    <span>2013</span><span>2019</span><span>2026</span>
-  </div>
+  <div class="hdr-spark" title="Criterios por año 2013–2026"><div class="yb" style="height:10%" title="2013: 10 criterios"></div><div class="yb" style="height:13%" title="2014: 14 criterios"></div><div class="yb" style="height:12%" title="2015: 13 criterios"></div><div class="yb" style="height:8%" title="2016: 6 criterios"></div><div class="yb" style="height:8%" title="2017: 2 criterios"></div><div class="yb" style="height:13%" title="2018: 14 criterios"></div><div class="yb" style="height:8%" title="2019: 3 criterios"></div><div class="yb" style="height:8%" title="2020: 5 criterios"></div><div class="yb" style="height:8%" title="2021: 2 criterios"></div><div class="yb" style="height:9%" title="2022: 9 criterios"></div><div class="yb" style="height:9%" title="2023: 9 criterios"></div><div class="yb" style="height:26%" title="2024: 27 criterios"></div><div class="yb" style="height:100%" title="2025: 105 criterios"></div><div class="yb" style="height:38%" title="2026: 40 criterios"></div></div>
 </header>
 
 <div class="body">
-  <aside class="sidebar" id="sidebar" aria-label="Filtros de búsqueda">
-    <div class="sb-search">
-      <div class="sb-inp-wrap">
-        <span class="sb-ico">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        </span>
-        <input class="sb-inp" id="sbSearch" type="search"
-               placeholder="Rubro, clave, ponente…" oninput="applyFilters()" autocomplete="off">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-scroll">
+      <div class="sb-srch">
+        <div class="sb-srch-row">
+          <span class="sb-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+          <input class="sb-inp" id="sbSearch" type="search" placeholder="Buscar rubro, clave, ponente…" oninput="applyFilters()" autocomplete="off">
+        </div>
+      </div>
+      <div class="sb-g">
+        <div class="sb-g-lbl">Fuente</div>
+        <label class="fi"><input type="radio" name="fSrc" value="" checked onchange="applyFilters()"><span class="fi-lbl">Todas</span><span class="fi-cnt">259</span></label>
+        <label class="fi"><input type="radio" name="fSrc" value="SCJN" onchange="applyFilters()"><span class="fi-lbl">SCJN</span><span class="fi-cnt">99</span></label>
+        <label class="fi"><input type="radio" name="fSrc" value="TFJA" onchange="applyFilters()"><span class="fi-lbl">TFJA</span><span class="fi-cnt">160</span></label>
+      </div>
+      <div class="sb-g">
+        <div class="sb-g-lbl">Tipo</div>
+        <label class="fi"><input type="checkbox" class="f-tipo" value="J" onchange="applyFilters()"><span class="fi-lbl">Jurisprudencia</span><span class="fi-cnt">93</span></label>
+        <label class="fi"><input type="checkbox" class="f-tipo" value="P" onchange="applyFilters()"><span class="fi-lbl">Precedente</span><span class="fi-cnt">0</span></label>
+        <label class="fi"><input type="checkbox" class="f-tipo" value="TA" onchange="applyFilters()"><span class="fi-lbl">Tesis aislada</span><span class="fi-cnt">166</span></label>
+      </div>
+      <div class="sb-g">
+        <div class="sb-g-lbl">Sala / Órgano</div>
+        <label class="fi"><input type="checkbox" class="f-sala" value="Pleno" onchange="applyFilters()"><span class="fi-lbl">Pleno</span><span class="fi-cnt">161</span></label>
+        <label class="fi"><input type="checkbox" class="f-sala" value="1a. Sala" onchange="applyFilters()"><span class="fi-lbl">1ª Sala (SCJN)</span><span class="fi-cnt">57</span></label>
+        <label class="fi"><input type="checkbox" class="f-sala" value="2a. Sala" onchange="applyFilters()"><span class="fi-lbl">2ª Sala (SCJN)</span><span class="fi-cnt">41</span></label>
+        <label class="fi"><input type="checkbox" class="f-sala" value="Sala Superior" onchange="applyFilters()"><span class="fi-lbl">Sala Superior (TFJA)</span><span class="fi-cnt">0</span></label>
+      </div>
+      <div class="sb-g">
+        <div class="sb-g-lbl">Tema clave</div>
+        <label class="fi"><input type="checkbox" class="f-tema" value="Otro" onchange="applyFilters()"><span class="fi-lbl">Otro</span><span class="fi-cnt">141</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Indemnización" onchange="applyFilters()"><span class="fi-lbl">Indemnización</span><span class="fi-cnt">62</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Daño moral" onchange="applyFilters()"><span class="fi-lbl">Daño moral</span><span class="fi-cnt">40</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Competencia/Procedimiento" onchange="applyFilters()"><span class="fi-lbl">Competencia/Procedimiento</span><span class="fi-cnt">37</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Actividad irregular" onchange="applyFilters()"><span class="fi-lbl">Actividad irregular</span><span class="fi-cnt">27</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Cuantificación" onchange="applyFilters()"><span class="fi-lbl">Cuantificación</span><span class="fi-cnt">10</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Resp. objetiva/directa" onchange="applyFilters()"><span class="fi-lbl">Resp. objetiva/directa</span><span class="fi-cnt">6</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Bienes/Derechos" onchange="applyFilters()"><span class="fi-lbl">Bienes/Derechos</span><span class="fi-cnt">5</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Intereses/Actualización" onchange="applyFilters()"><span class="fi-lbl">Intereses/Actualización</span><span class="fi-cnt">4</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Prescripción/Caducidad" onchange="applyFilters()"><span class="fi-lbl">Prescripción/Caducidad</span><span class="fi-cnt">4</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Relación laboral" onchange="applyFilters()"><span class="fi-lbl">Relación laboral</span><span class="fi-cnt">3</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Carga de prueba" onchange="applyFilters()"><span class="fi-lbl">Carga de prueba</span><span class="fi-cnt">2</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Nexo causal" onchange="applyFilters()"><span class="fi-lbl">Nexo causal</span><span class="fi-cnt">2</span></label>
+      </div>
+      <div class="sb-g">
+        <div class="sb-g-lbl">Año</div>
+        <div class="sb-yr">
+          <input class="yr-in" id="fYF" type="number" min="2013" max="2026" value="2013" onchange="applyFilters()">
+          <span class="yr-sep">—</span>
+          <input class="yr-in" id="fYT" type="number" min="2013" max="2026" value="2026" onchange="applyFilters()">
+        </div>
       </div>
     </div>
-
-    <div class="sb-sec">
-      <div class="sb-hdr">
-        <span class="sb-hdr-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-        Fuente
-      </div>
-      <label class="fi"><input type="radio" name="fSrc" value="" checked onchange="applyFilters()">
-        <span class="fi-dot all"></span><span class="fi-lbl">Todas</span><span class="fi-cnt">259</span></label>
-      <label class="fi"><input type="radio" name="fSrc" value="SCJN" onchange="applyFilters()">
-        <span class="fi-dot SCJN"></span><span class="fi-lbl">SCJN</span><span class="fi-cnt">99</span></label>
-      <label class="fi"><input type="radio" name="fSrc" value="TFJA" onchange="applyFilters()">
-        <span class="fi-dot TFJA"></span><span class="fi-lbl">TFJA</span><span class="fi-cnt">160</span></label>
-    </div>
-
-    <div class="sb-sec">
-      <div class="sb-hdr">
-        <span class="sb-hdr-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        Tipo de criterio
-      </div>
-      <label class="fi"><input type="checkbox" class="f-tipo" value="J" onchange="applyFilters()">
-        <span class="fi-dot J"></span><span class="fi-lbl">Jurisprudencia</span><span class="fi-cnt">93</span></label>
-      <label class="fi"><input type="checkbox" class="f-tipo" value="P" onchange="applyFilters()">
-        <span class="fi-dot P"></span><span class="fi-lbl">Precedente</span><span class="fi-cnt">0</span></label>
-      <label class="fi"><input type="checkbox" class="f-tipo" value="TA" onchange="applyFilters()">
-        <span class="fi-dot TA"></span><span class="fi-lbl">Tesis aislada</span><span class="fi-cnt">166</span></label>
-    </div>
-
-    <div class="sb-sec">
-      <div class="sb-hdr">
-        <span class="sb-hdr-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2L2 7h20z"/></svg></span>
-        Sala / Órgano
-      </div>
-      <label class="fi"><input type="checkbox" class="f-sala" value="Pleno" onchange="applyFilters()">
-        <span class="fi-dot Pleno"></span><span class="fi-lbl">Pleno</span><span class="fi-cnt">161</span></label>
-      <label class="fi"><input type="checkbox" class="f-sala" value="1a. Sala" onchange="applyFilters()">
-        <span class="fi-dot s1"></span><span class="fi-lbl">1ª Sala (SCJN)</span><span class="fi-cnt">57</span></label>
-      <label class="fi"><input type="checkbox" class="f-sala" value="2a. Sala" onchange="applyFilters()">
-        <span class="fi-dot s2"></span><span class="fi-lbl">2ª Sala (SCJN)</span><span class="fi-cnt">41</span></label>
-      <label class="fi"><input type="checkbox" class="f-sala" value="Sala Superior" onchange="applyFilters()">
-        <span class="fi-dot SS"></span><span class="fi-lbl">Sala Superior (TFJA)</span><span class="fi-cnt">0</span></label>
-    </div>
-
-    <div class="sb-sec">
-      <div class="sb-hdr">
-        <span class="sb-hdr-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span>
-        Tema clave
-      </div>
-      <div><label class="fi"><input type="checkbox" class="f-tema" value="Otro" onchange="applyFilters()"><span class="fi-lbl">Otro</span><span class="fi-cnt">141</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Indemnización" onchange="applyFilters()"><span class="fi-lbl">Indemnización</span><span class="fi-cnt">62</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Daño moral" onchange="applyFilters()"><span class="fi-lbl">Daño moral</span><span class="fi-cnt">40</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Competencia/Procedimiento" onchange="applyFilters()"><span class="fi-lbl">Competencia/Procedimiento</span><span class="fi-cnt">37</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Actividad irregular" onchange="applyFilters()"><span class="fi-lbl">Actividad irregular</span><span class="fi-cnt">27</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Cuantificación" onchange="applyFilters()"><span class="fi-lbl">Cuantificación</span><span class="fi-cnt">10</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Resp. objetiva/directa" onchange="applyFilters()"><span class="fi-lbl">Resp. objetiva/directa</span><span class="fi-cnt">6</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Bienes/Derechos" onchange="applyFilters()"><span class="fi-lbl">Bienes/Derechos</span><span class="fi-cnt">5</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Intereses/Actualización" onchange="applyFilters()"><span class="fi-lbl">Intereses/Actualización</span><span class="fi-cnt">4</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Prescripción/Caducidad" onchange="applyFilters()"><span class="fi-lbl">Prescripción/Caducidad</span><span class="fi-cnt">4</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Relación laboral" onchange="applyFilters()"><span class="fi-lbl">Relación laboral</span><span class="fi-cnt">3</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Carga de prueba" onchange="applyFilters()"><span class="fi-lbl">Carga de prueba</span><span class="fi-cnt">2</span></label><label class="fi"><input type="checkbox" class="f-tema" value="Nexo causal" onchange="applyFilters()"><span class="fi-lbl">Nexo causal</span><span class="fi-cnt">2</span></label></div>
-    </div>
-
-    <div class="sb-sec">
-      <div class="sb-hdr">
-        <span class="sb-hdr-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-        Rango de año
-      </div>
-      <div class="yr-row">
-        <input class="yr-in" id="fYF" type="number" min="2013" max="2026" value="2013" onchange="applyFilters()">
-        <span class="yr-sep">—</span>
-        <input class="yr-in" id="fYT" type="number" min="2013" max="2026" value="2026" onchange="applyFilters()">
-      </div>
-    </div>
-
     <div class="sb-foot">
-      <button class="clear-btn" onclick="clearFilters()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-        Limpiar filtros
-      </button>
+      <button class="clear-btn" onclick="clearFilters()">Limpiar filtros</button>
     </div>
   </aside>
 
@@ -803,8 +388,8 @@ kbd{
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span>Línea de tiempo</span>
       </button>
-      <div class="tb-div"></div>
-      <span class="count-badge" id="countPill">259 criterios</span>
+      <div class="tb-sep"></div>
+      <span class="result-cnt" id="countPill">259 criterios</span>
     </div>
     <div class="fchips" id="fchips"></div>
     <div class="views-wrap" id="vw"></div>
@@ -812,44 +397,45 @@ kbd{
 </div>
 </div>
 
-<div id="leyes-raw" style="display:none"><div class="lw-note"><span class="lw-note-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg></span><div><strong>Nota histórica:</strong> La RPE estuvo en el artículo <strong>113</strong> CPEUM hasta la reforma del <strong>27 de mayo de 2015</strong> (DOF), trasladada al último párrafo del artículo <strong>109</strong>. Los criterios TFJA de Séptima Época citan el texto anterior.</div></div><div class="lw-card"><div class="lw-hdr"><span class="lw-badge cpeum">CPEUM</span><span class="lw-title">Artículo 109 — Último párrafo (RPE)</span><span class="lw-pg">p. 120</span></div><blockquote class="lw-text">La responsabilidad del Estado por los daños que, con motivo de su actividad administrativa irregular, 
+<div id="leyes-raw" style="display:none"><div class="lw-note">Nota: La RPE estuvo en el artículo <strong>113</strong> CPEUM hasta la reforma del <strong>27 de mayo de 2015</strong> (DOF); se trasladó al último párrafo del artículo <strong>109</strong>. Los criterios TFJA de Séptima Época citan el texto anterior.</div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge cpeum">CPEUM</span><span class="lw-title">Artículo 109 — Último párrafo (RPE)</span><span class="lw-pg">p. 120</span></div><blockquote class="lw-q">La responsabilidad del Estado por los daños que, con motivo de su actividad administrativa irregular, 
 cause en los bienes o derechos de los particulares, será objetiva y directa. Los particulares tendrán 
-derecho a una indemnización conforme a las bases, límites y procedimientos que establezcan las leyes.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2015, 27 de mayo; última reforma 2 de junio de 2026). Constitución Política de los Estados Unidos Mexicanos, artículo 109, último párrafo. Diario Oficial de la Federación. [p. 120]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 1</span><span class="lw-pg">p. 1</span></div><blockquote class="lw-text">ARTÍCULO 1.- La presente Ley es reglamentaria del sexto párrafo del</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 1. DOF. [p. 1]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 2</span><span class="lw-pg">p. 1</span></div><blockquote class="lw-text">ARTÍCULO 2.- Son sujetos de esta Ley, los entes públicos federales. Para los efectos de la misma, se entenderá por entes públicos federales, salvo mención expresa en contrario, a los Poderes Judicial, Legislativo y Ejecutivo de la Federación, organismos constitucionales autónomos, dependencias, entidades de la Administración Pública Federal, los Tribunales Federales Administrativos y cualquier otro ente público de carácter federal. Párrafo reformado DOF 20-05-2021 Los preceptos contenidos en el Capítulo II y demás disposiciones de esta Ley serán aplicables, en lo conducente, para cumplimentar los fallos de la Corte Interamericana de Derechos Humanos, así como las ---</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 2. DOF. [p. 1]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 3</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-text">ARTÍCULO 3.- Se exceptúan de la obligación de indemnizar, de acuerdo con esta Ley, además de los casos fortuitos y de fuerza mayor, los daños y perjuicios que no sean consecuencia de la actividad administrativa irregular del Estado, así como aquellos que se deriven de hechos o circunstancias que no se hubieran podido prever o evitar según el estado de los conocimientos de la ciencia o de la técnica existentes en el momento de su acaecimiento y en aquellos casos en los que el solicitante de la indemnización sea el único causante del daño.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 3. DOF. [p. 2]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 4</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-text">ARTÍCULO 4.- Los daños y perjuicios materiales que constituyan la lesión patrimonial reclamada, incluidos los personales y morales, habrán de ser reales, evaluables en dinero, directamente relacionados con una o varias personas, y desiguales a los que pudieran afectar al común de la población.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 4. DOF. [p. 2]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 5</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-text">ARTÍCULO 5.- Los entes públicos federales cubrirán las indemnizaciones derivadas de responsabilidad patrimonial que se determinen conforme a esta Ley, con cargo a sus respectivos presupuestos. Los pagos de las indemnizaciones derivadas de responsabilidad patrimonial se realizarán conforme a la disponibilidad presupuestaria del ejercicio fiscal correspondiente, sin afectar el cumplimiento de los objetivos de los programas que se aprueben en el Presupuesto de Egresos de la Federación. En la fijación de los montos de las partidas presupuestales deberán preverse las indemnizaciones que no hayan podido ser pagadas en el ejercicio inmediato anterior, según lo dispuesto en los artículos 8 y 11 de la presente Ley.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 5. DOF. [p. 2]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 6</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-text">ARTÍCULO 6.- Los entes públicos federales, tomando en cuenta la disponibilidad de recursos para el ejercicio fiscal correspondiente, incluirán en sus respectivos anteproyectos de presupuesto los recursos para cubrir las erogaciones derivadas de responsabilidad patrimonial conforme al orden establecido en el registro de indemnizaciones a que se refiere el</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 6. DOF. [p. 2]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 7</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-text">ARTÍCULO 7.- El Ejecutivo Federal, a través de la términos de la Ley de Presupuesto, Contabilidad y Gasto Público Federal, deberá autorizar el traspaso de los montos presupuestales aprobados a las diferentes dependencias o entidades de la Administración ---</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 7. DOF. [p. 2]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 8</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-text">ARTÍCULO 8.- Las indemnizaciones fijadas por autoridades administrativas que excedan del monto máximo presupuestado en un ejercicio fiscal determinado serán cubiertas en el siguiente ejercicio fiscal, según el orden de registro a que se refiere el</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 8. DOF. [p. 3]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 9</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-text">ARTÍCULO 9.- La presente Ley se aplicará supletoriamente a las diversas leyes administrativas que contengan un régimen especial de responsabilidad patrimonial del Estado. A falta de disposición expresa en esta Ley, se aplicarán las disposiciones contenidas en la Ley Federal de Procedimiento Administrativo, el Código Fiscal de la Federación, el Código Civil Federal y los principios generales del derecho.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 9. DOF. [p. 3]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 10</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-text">ARTÍCULO 10.- Los entes públicos tendrán la obligación de denunciar ante el Ministerio Público a toda persona que directa o indirectamente participe, coadyuve, asista o simule la producción de daños con el propósito de acreditar indebidamente la Responsabilidad Patrimonial del Estado o de obtener alguna de las indemnizaciones a que se refiere esta Ley. CAPÍTULO II De las Indemnizaciones</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 10. DOF. [p. 3]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 11</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-text">ARTÍCULO 11.- La indemnización por Responsabilidad Patrimonial del Estado derivada de la actividad administrativa irregular, deberá pagarse al reclamante de acuerdo a las modalidades que establece esta Ley y las bases siguientes: a) Deberá pagarse en moneda nacional; b) Podrá convenirse su pago en especie; c) La cuantificación de la indemnización se calculará de acuerdo a la fecha en que la lesión efectivamente se produjo o la fecha en que haya cesado cuando sea de carácter continuo; d) En todo caso deberá actualizarse la cantidad a indemnizar al tiempo en que haya de efectuarse el cumplimiento de la resolución por la que se resuelve y ordena el pago de la indemnización; e) En caso de retraso en el cumplimiento del pago de la indemnización procederá la actualización de conformidad con lo dispuesto en el Código Fiscal de la Federación, y f) Los entes públicos federales podrán cubrir el mo</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 11. DOF. [p. 3]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 12</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-text">ARTÍCULO 12.- Las indemnizaciones corresponderán a la reparación integral del daño y, en su caso, por el daño personal y moral.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 12. DOF. [p. 4]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 13</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-text">ARTÍCULO 13.- El monto de la indemnización por daños y perjuicios materiales se calculará de acuerdo con los criterios establecidos por la Ley de Expropiación, el Código Fiscal de la Federación, la Ley General de Bienes Nacionales y demás disposiciones aplicables, debiéndose tomar en consideración los valores comerciales o de mercado.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 13. DOF. [p. 4]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 14</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-text">ARTÍCULO 14.- Los montos de las indemnizaciones se calcularán de la siguiente forma: I. En el caso de daños personales: a) Corresponderá una indemnización con base en los dictámenes médicos correspondientes, conforme a lo dispuesto para riesgos de trabajo en la Ley Federal del Trabajo, y b) Además de la indemnización prevista en el inciso anterior, el reclamante o causahabiente tendrá derecho a que se le cubran los gastos médicos que en su caso se eroguen, de conformidad con la propia Ley Federal del Trabajo disponga para riesgos de trabajo. II. En el caso de daño moral, la autoridad administrativa o jurisdiccional, en su caso, calculará el monto de la indemnización de acuerdo con los criterios establecidos en el Código Civil Federal, debiendo tomar en consideración los dictámenes periciales ofrecidos por el reclamante. La indemnización por daño moral que el Estado esté obligado a cubrir</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 14. DOF. [p. 4]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 15</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-text">ARTÍCULO 15.- Las indemnizaciones deberán cubrirse en su totalidad de conformidad con los términos y condiciones dispuestos por esta Ley y a las que ella remita. En los casos de haberse celebrado contrato de seguro contra la responsabilidad, ante la eventual producción de daños y perjuicios que sean consecuencia de la actividad administrativa irregular del Estado, la suma asegurada se destinará a cubrir el monto equivalente a la reparación integral. De ser ésta insuficiente, el Estado continuará obligado a resarcir la diferencia respectiva. El pago de cantidades líquidas por concepto de deducible corresponde al Estado y no podrá disminuirse de la indemnización.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 15. DOF. [p. 4]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 16</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-text">ARTÍCULO 16.- Las sentencias firmes deberán registrarse por el ente público federal responsable, quienes deberán llevar un registro de indemnizaciones debidas por responsabilidad patrimonial, que será de consulta pública. Las indemnizaciones por lesiones patrimoniales serán pagadas tomando en cuenta el orden cronológico en que se emitan las resoluciones de las autoridades administrativas. CAPÍTULO III Del Procedimiento ---</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 16. DOF. [p. 4]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 17</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 17.- Los procedimientos de responsabilidad patrimonial de los entes públicos federales se iniciarán por reclamación de la parte interesada.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 17. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 18</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 18.- La parte interesada deberá presentar su reclamación ante la dependencia o entidad presuntamente responsable u organismo constitucional autónomo, conforme a lo establecido en la Ley Federal de Procedimiento Administrativo. Párrafo reformado DOF 12-06-2009 Los particulares en su demanda, deberán señalar, en su caso, el o los servidores públicos involucrados en la actividad administrativa que se considere irregular. Si iniciado el procedimiento de responsabilidad patrimonial del Estado, se encontrare pendiente alguno de los procedimientos por los que el particular haya impugnado el acto de autoridad que se reputa como dañoso, el procedimiento de responsabilidad patrimonial del Estado se suspenderá hasta en tanto en los otros procedimientos, la autoridad competente no haya dictado una resolución que cause estado.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 18. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 19</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 19.- El procedimiento de responsabilidad patrimonial deberá ajustarse, además de lo dispuesto por esta Ley, a lo dispuesto por la Ley Federal de Procedimiento Contencioso Administrativo, en la vía jurisdiccional. Artículo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 19. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 20</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 20.- La nulidad o anulabilidad de actos administrativos por la vía administrativa, o por la vía jurisdiccional contencioso-administrativa, no presupone por sí misma derecho a la indemnización.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 20. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 21</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 21.- El daño que se cause al patrimonio de los particulares por la actividad administrativa irregular, deberá acreditarse tomando en consideración los siguientes criterios: a) En los casos en que la causa o causas productoras del daño sean identificables, la relación causa-efecto entre la lesión patrimonial y la acción administrativa irregular imputable al Estado deberá probarse fehacientemente, y b) En su defecto, la causalidad única o concurrencia de hechos y condiciones causales, así como la participación de otros agentes en la generación de la lesión reclamada, deberá probarse a través de la identificación precisa de los hechos que produjeron el resultado final, examinando rigurosamente las condiciones o circunstancias originales o sobrevenidas que hayan podido atenuar o agravar la lesión patrimonial reclamada.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 21. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 22</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 22.- La responsabilidad del Estado deberá probarla el reclamante que considere lesionado su patrimonio, por no tener la obligación jurídica de soportarlo. Por su parte, al Estado corresponderá probar, en su caso, la participación de terceros o del propio reclamante en la producción de los daños y perjuicios irrogados al mismo; que los daños no son consecuencia de la actividad administrativa irregular del Estado; que los daños derivan de hechos o circunstancias imprevisibles o inevitables según los conocimientos de la ciencia o de la técnica existentes en el momento de su acaecimiento, o bien, la existencia de la fuerza mayor que lo exonera de responsabilidad patrimonial.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 22. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 23</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-text">ARTÍCULO 23.- Las resoluciones que dicte el ente público federal con motivo de las reclamaciones que prevé la presente Ley, deberán contener como elementos mínimos los siguientes: El relativo a la existencia de la relación de causalidad entre la actividad administrativa y la lesión producida y la valoración del daño o perjuicio causado, así como el monto en dinero o en especie de la indemnización, explicitando los criterios utilizados para su cuantificación. Igualmente en los casos de concurrencia previstos en el Capítulo IV de esta Ley, en dicha resolución se deberán razonar los criterios de imputación y la graduación correspondiente para su aplicación a cada caso en particular. Artículo reformado DOF 12-06-2009 ---</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 23. DOF. [p. 5]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 24</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-text">ARTÍCULO 24.- Las resoluciones de la autoridad administrativa que nieguen la indemnización, o que, por su monto, no satisfagan al interesado podrán impugnarse mediante recurso de revisión en vía administrativa o bien, directamente por vía jurisdiccional ante el Tribunal Federal de Justicia Fiscal y Administrativa. Artículo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 24. DOF. [p. 6]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 25</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-text">ARTÍCULO 25.- El derecho a reclamar indemnización prescribe en un año, mismo que se computará a partir del día siguiente a aquel en que se hubiera producido la lesión patrimonial, o a partir del momento en que hubiesen cesado sus efectos lesivos, si fuesen de carácter continuo. Cuando existan daños de carácter físico o psíquico a las personas, el plazo de prescripción será de dos años. Los plazos de prescripción previstos en este artículo, se interrumpirán al iniciarse el procedimiento de reclamación, a través de los cuales se impugne la legalidad de los actos administrativos que probablemente produjeron los daños o perjuicios. Párrafo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 25. DOF. [p. 6]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 26</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-text">ARTÍCULO 26.- Los reclamantes afectados podrán celebrar convenio con los entes públicos federales, a fin de dar por concluida la controversia, mediante la fijación y el pago de la indemnización que las partes acuerden. Para la validez de dicho convenio se requerirá, según sea el caso, la aprobación por parte de la contraloría interna o del órgano de vigilancia correspondiente. CAPÍTULO IV De la Concurrencia</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 26. DOF. [p. 6]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 27</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-text">ARTÍCULO 27.- En caso de concurrencia acreditada en términos del</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 27. DOF. [p. 6]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 28</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 28.- En el supuesto de que el reclamante se encuentre entre los causantes de la lesión cuya reparación solicita, la proporción cuantitativa de su participación en el daño y perjuicio causado se deducirá del monto de la indemnización total.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 28. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 29</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 29.- En el supuesto de que entre los causantes de la lesión patrimonial reclamada no se pueda identificar su exacta participación en la producción de la misma, se establecerá entre ellos una responsabilidad solidaria frente al reclamante, debiéndose distribuir el pago de la indemnización en partes iguales entre todos los cocausantes.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 29. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 30</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 30.- En el supuesto de que las reclamaciones deriven de hechos o actos dañosos producidos como consecuencia de una concesión de servicio público por parte de la Administración Pública Federal, y las lesiones patrimoniales hayan tenido como causa una determinación del concesionante que sea de ineludible cumplimiento para el concesionario, el Estado responderá directamente. Los concesionarios tendrán la obligación de contratar seguros u otorgar garantías a favor del concesionante, para el caso de que la lesión reclamada haya sido ocasionada por la actividad del concesionario y no se derive de una determinación del concesionante. CAPÍTULO V Del Derecho del Estado de Repetir contra los Servidores Públicos</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 30. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 31</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 31.- El Estado podrá repetir de los servidores públicos el pago de la indemnización cubierta a los particulares cuando, previa substanciación del procedimiento administrativo disciplinario previsto en la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos, se determine su responsabilidad, y que la falta administrativa haya tenido el carácter de infracción grave. El monto que se exija al servidor público por este concepto formará parte de la sanción económica que se le aplique. La gravedad de la infracción se calificará de acuerdo con los criterios que establece la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos. Además, se tomarán en cuenta los siguientes criterios: Los estándares promedio de la actividad administrativa, la perturbación de la misma, la existencia o no de intencionalidad, la responsabilidad profesional y su rela</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 31. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 32</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 32.- El Estado podrá, también, instruir igual procedimiento a los servidores públicos por él nombrados, designados o contratados y, en general, a toda persona que desempeñe un empleo, cargo o comisión de cualquier naturaleza en la Administración Pública Federal, cuando le hayan ocasionado daños y perjuicios en sus bienes y derechos derivado de faltas o infracciones administrativas graves. Lo anterior, sin perjuicio de lo dispuesto por otras leyes aplicables en la materia.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 32. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 33</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-text">ARTÍCULO 33.- Los servidores públicos podrán impugnar las resoluciones administrativas por las que se les imponga la obligación de resarcir los daños y perjuicios que el Estado haya pagado con motivo de los reclamos indemnizatorios respectivos, a través del recurso de revocación, o ante el Tribunal Federal de Justicia Fiscal y Administrativa, en términos de la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos. ---</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 33. DOF. [p. 7]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 34</span><span class="lw-pg">p. 8</span></div><blockquote class="lw-text">ARTÍCULO 34.- La presentación de reclamaciones por responsabilidad patrimonial del Estado interrumpirá los plazos de prescripción que la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos determina para iniciar el procedimiento administrativo disciplinario a los servidores públicos, los cuales se reanudarán cuando quede firme la resolución o sentencia definitiva que al efecto se dicte en el primero de los procedimientos mencionados.</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 34. DOF. [p. 8]</div></div>
-<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 35</span><span class="lw-pg">p. 8</span></div><blockquote class="lw-text">ARTÍCULO 35.- Las cantidades que se obtengan con motivo de las sanciones económicas que las autoridades competentes impongan a los servidores públicos, en términos de lo dispuesto por la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos se adicionarán, según corresponda, al monto de los recursos previstos para cubrir las obligaciones indemnizatorias derivadas de la responsabilidad patrimonial de los entes públicos federales. ARTÍCULO SEGUNDO.- ......... ARTÍCULO TERCERO.- ......... TRANSITORIOS PRIMERO.- La presente Ley entrará en vigor el 1o. de enero del año 2005. SEGUNDO.- Los asuntos que se encuentren en trámite en los entes públicos federales, relacionados con la indemnización a los particulares derivada de las faltas administrativas en que hubieren incurrido los servidores públicos, se atenderán hasta su total terminación de acuerdo con las disposiciones a</blockquote><div class="lw-apa"><span class="apa-lbl">APA 7</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 35. DOF. [p. 8]</div></div></div>
+derecho a una indemnización conforme a las bases, límites y procedimientos que establezcan las leyes.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2015, 27 de mayo; última reforma 2 de junio de 2026). Constitución Política de los Estados Unidos Mexicanos, artículo 109, último párrafo. Diario Oficial de la Federación. [p. 120]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 1</span><span class="lw-pg">p. 1</span></div><blockquote class="lw-q">ARTÍCULO 1.- La presente Ley es reglamentaria del sexto párrafo del</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 1. DOF. [p. 1]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 2</span><span class="lw-pg">p. 1</span></div><blockquote class="lw-q">ARTÍCULO 2.- Son sujetos de esta Ley, los entes públicos federales. Para los efectos de la misma, se entenderá por entes públicos federales, salvo mención expresa en contrario, a los Poderes Judicial, Legislativo y Ejecutivo de la Federación, organismos constitucionales autónomos, dependencias, entidades de la Administración Pública Federal, los Tribunales Federales Administrativos y cualquier otro ente público de carácter federal. Párrafo reformado DOF 20-05-2021 Los preceptos contenidos en el Capítulo II y demás disposiciones de esta Ley serán aplicables, en lo conducente, para cumplimentar los fallos de la Corte Interamericana de Derechos Humanos, así como las ---</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 2. DOF. [p. 1]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 3</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-q">ARTÍCULO 3.- Se exceptúan de la obligación de indemnizar, de acuerdo con esta Ley, además de los casos fortuitos y de fuerza mayor, los daños y perjuicios que no sean consecuencia de la actividad administrativa irregular del Estado, así como aquellos que se deriven de hechos o circunstancias que no se hubieran podido prever o evitar según el estado de los conocimientos de la ciencia o de la técnica existentes en el momento de su acaecimiento y en aquellos casos en los que el solicitante de la indemnización sea el único causante del daño.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 3. DOF. [p. 2]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 4</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-q">ARTÍCULO 4.- Los daños y perjuicios materiales que constituyan la lesión patrimonial reclamada, incluidos los personales y morales, habrán de ser reales, evaluables en dinero, directamente relacionados con una o varias personas, y desiguales a los que pudieran afectar al común de la población.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 4. DOF. [p. 2]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 5</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-q">ARTÍCULO 5.- Los entes públicos federales cubrirán las indemnizaciones derivadas de responsabilidad patrimonial que se determinen conforme a esta Ley, con cargo a sus respectivos presupuestos. Los pagos de las indemnizaciones derivadas de responsabilidad patrimonial se realizarán conforme a la disponibilidad presupuestaria del ejercicio fiscal correspondiente, sin afectar el cumplimiento de los objetivos de los programas que se aprueben en el Presupuesto de Egresos de la Federación. En la fijación de los montos de las partidas presupuestales deberán preverse las indemnizaciones que no hayan podido ser pagadas en el ejercicio inmediato anterior, según lo dispuesto en los artículos 8 y 11 de la presente Ley.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 5. DOF. [p. 2]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 6</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-q">ARTÍCULO 6.- Los entes públicos federales, tomando en cuenta la disponibilidad de recursos para el ejercicio fiscal correspondiente, incluirán en sus respectivos anteproyectos de presupuesto los recursos para cubrir las erogaciones derivadas de responsabilidad patrimonial conforme al orden establecido en el registro de indemnizaciones a que se refiere el</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 6. DOF. [p. 2]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 7</span><span class="lw-pg">p. 2</span></div><blockquote class="lw-q">ARTÍCULO 7.- El Ejecutivo Federal, a través de la términos de la Ley de Presupuesto, Contabilidad y Gasto Público Federal, deberá autorizar el traspaso de los montos presupuestales aprobados a las diferentes dependencias o entidades de la Administración ---</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 7. DOF. [p. 2]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 8</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-q">ARTÍCULO 8.- Las indemnizaciones fijadas por autoridades administrativas que excedan del monto máximo presupuestado en un ejercicio fiscal determinado serán cubiertas en el siguiente ejercicio fiscal, según el orden de registro a que se refiere el</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 8. DOF. [p. 3]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 9</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-q">ARTÍCULO 9.- La presente Ley se aplicará supletoriamente a las diversas leyes administrativas que contengan un régimen especial de responsabilidad patrimonial del Estado. A falta de disposición expresa en esta Ley, se aplicarán las disposiciones contenidas en la Ley Federal de Procedimiento Administrativo, el Código Fiscal de la Federación, el Código Civil Federal y los principios generales del derecho.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 9. DOF. [p. 3]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 10</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-q">ARTÍCULO 10.- Los entes públicos tendrán la obligación de denunciar ante el Ministerio Público a toda persona que directa o indirectamente participe, coadyuve, asista o simule la producción de daños con el propósito de acreditar indebidamente la Responsabilidad Patrimonial del Estado o de obtener alguna de las indemnizaciones a que se refiere esta Ley. CAPÍTULO II De las Indemnizaciones</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 10. DOF. [p. 3]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 11</span><span class="lw-pg">p. 3</span></div><blockquote class="lw-q">ARTÍCULO 11.- La indemnización por Responsabilidad Patrimonial del Estado derivada de la actividad administrativa irregular, deberá pagarse al reclamante de acuerdo a las modalidades que establece esta Ley y las bases siguientes: a) Deberá pagarse en moneda nacional; b) Podrá convenirse su pago en especie; c) La cuantificación de la indemnización se calculará de acuerdo a la fecha en que la lesión efectivamente se produjo o la fecha en que haya cesado cuando sea de carácter continuo; d) En todo caso deberá actualizarse la cantidad a indemnizar al tiempo en que haya de efectuarse el cumplimiento de la resolución por la que se resuelve y ordena el pago de la indemnización; e) En caso de retraso en el cumplimiento del pago de la indemnización procederá la actualización de conformidad con lo dispuesto en el Código Fiscal de la Federación, y f) Los entes públicos federales podrán cubrir el mo</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 11. DOF. [p. 3]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 12</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-q">ARTÍCULO 12.- Las indemnizaciones corresponderán a la reparación integral del daño y, en su caso, por el daño personal y moral.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 12. DOF. [p. 4]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 13</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-q">ARTÍCULO 13.- El monto de la indemnización por daños y perjuicios materiales se calculará de acuerdo con los criterios establecidos por la Ley de Expropiación, el Código Fiscal de la Federación, la Ley General de Bienes Nacionales y demás disposiciones aplicables, debiéndose tomar en consideración los valores comerciales o de mercado.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 13. DOF. [p. 4]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 14</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-q">ARTÍCULO 14.- Los montos de las indemnizaciones se calcularán de la siguiente forma: I. En el caso de daños personales: a) Corresponderá una indemnización con base en los dictámenes médicos correspondientes, conforme a lo dispuesto para riesgos de trabajo en la Ley Federal del Trabajo, y b) Además de la indemnización prevista en el inciso anterior, el reclamante o causahabiente tendrá derecho a que se le cubran los gastos médicos que en su caso se eroguen, de conformidad con la propia Ley Federal del Trabajo disponga para riesgos de trabajo. II. En el caso de daño moral, la autoridad administrativa o jurisdiccional, en su caso, calculará el monto de la indemnización de acuerdo con los criterios establecidos en el Código Civil Federal, debiendo tomar en consideración los dictámenes periciales ofrecidos por el reclamante. La indemnización por daño moral que el Estado esté obligado a cubrir</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 14. DOF. [p. 4]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 15</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-q">ARTÍCULO 15.- Las indemnizaciones deberán cubrirse en su totalidad de conformidad con los términos y condiciones dispuestos por esta Ley y a las que ella remita. En los casos de haberse celebrado contrato de seguro contra la responsabilidad, ante la eventual producción de daños y perjuicios que sean consecuencia de la actividad administrativa irregular del Estado, la suma asegurada se destinará a cubrir el monto equivalente a la reparación integral. De ser ésta insuficiente, el Estado continuará obligado a resarcir la diferencia respectiva. El pago de cantidades líquidas por concepto de deducible corresponde al Estado y no podrá disminuirse de la indemnización.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 15. DOF. [p. 4]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 16</span><span class="lw-pg">p. 4</span></div><blockquote class="lw-q">ARTÍCULO 16.- Las sentencias firmes deberán registrarse por el ente público federal responsable, quienes deberán llevar un registro de indemnizaciones debidas por responsabilidad patrimonial, que será de consulta pública. Las indemnizaciones por lesiones patrimoniales serán pagadas tomando en cuenta el orden cronológico en que se emitan las resoluciones de las autoridades administrativas. CAPÍTULO III Del Procedimiento ---</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 16. DOF. [p. 4]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 17</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 17.- Los procedimientos de responsabilidad patrimonial de los entes públicos federales se iniciarán por reclamación de la parte interesada.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 17. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 18</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 18.- La parte interesada deberá presentar su reclamación ante la dependencia o entidad presuntamente responsable u organismo constitucional autónomo, conforme a lo establecido en la Ley Federal de Procedimiento Administrativo. Párrafo reformado DOF 12-06-2009 Los particulares en su demanda, deberán señalar, en su caso, el o los servidores públicos involucrados en la actividad administrativa que se considere irregular. Si iniciado el procedimiento de responsabilidad patrimonial del Estado, se encontrare pendiente alguno de los procedimientos por los que el particular haya impugnado el acto de autoridad que se reputa como dañoso, el procedimiento de responsabilidad patrimonial del Estado se suspenderá hasta en tanto en los otros procedimientos, la autoridad competente no haya dictado una resolución que cause estado.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 18. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 19</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 19.- El procedimiento de responsabilidad patrimonial deberá ajustarse, además de lo dispuesto por esta Ley, a lo dispuesto por la Ley Federal de Procedimiento Contencioso Administrativo, en la vía jurisdiccional. Artículo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 19. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 20</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 20.- La nulidad o anulabilidad de actos administrativos por la vía administrativa, o por la vía jurisdiccional contencioso-administrativa, no presupone por sí misma derecho a la indemnización.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 20. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 21</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 21.- El daño que se cause al patrimonio de los particulares por la actividad administrativa irregular, deberá acreditarse tomando en consideración los siguientes criterios: a) En los casos en que la causa o causas productoras del daño sean identificables, la relación causa-efecto entre la lesión patrimonial y la acción administrativa irregular imputable al Estado deberá probarse fehacientemente, y b) En su defecto, la causalidad única o concurrencia de hechos y condiciones causales, así como la participación de otros agentes en la generación de la lesión reclamada, deberá probarse a través de la identificación precisa de los hechos que produjeron el resultado final, examinando rigurosamente las condiciones o circunstancias originales o sobrevenidas que hayan podido atenuar o agravar la lesión patrimonial reclamada.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 21. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 22</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 22.- La responsabilidad del Estado deberá probarla el reclamante que considere lesionado su patrimonio, por no tener la obligación jurídica de soportarlo. Por su parte, al Estado corresponderá probar, en su caso, la participación de terceros o del propio reclamante en la producción de los daños y perjuicios irrogados al mismo; que los daños no son consecuencia de la actividad administrativa irregular del Estado; que los daños derivan de hechos o circunstancias imprevisibles o inevitables según los conocimientos de la ciencia o de la técnica existentes en el momento de su acaecimiento, o bien, la existencia de la fuerza mayor que lo exonera de responsabilidad patrimonial.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 22. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 23</span><span class="lw-pg">p. 5</span></div><blockquote class="lw-q">ARTÍCULO 23.- Las resoluciones que dicte el ente público federal con motivo de las reclamaciones que prevé la presente Ley, deberán contener como elementos mínimos los siguientes: El relativo a la existencia de la relación de causalidad entre la actividad administrativa y la lesión producida y la valoración del daño o perjuicio causado, así como el monto en dinero o en especie de la indemnización, explicitando los criterios utilizados para su cuantificación. Igualmente en los casos de concurrencia previstos en el Capítulo IV de esta Ley, en dicha resolución se deberán razonar los criterios de imputación y la graduación correspondiente para su aplicación a cada caso en particular. Artículo reformado DOF 12-06-2009 ---</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 23. DOF. [p. 5]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 24</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-q">ARTÍCULO 24.- Las resoluciones de la autoridad administrativa que nieguen la indemnización, o que, por su monto, no satisfagan al interesado podrán impugnarse mediante recurso de revisión en vía administrativa o bien, directamente por vía jurisdiccional ante el Tribunal Federal de Justicia Fiscal y Administrativa. Artículo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 24. DOF. [p. 6]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 25</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-q">ARTÍCULO 25.- El derecho a reclamar indemnización prescribe en un año, mismo que se computará a partir del día siguiente a aquel en que se hubiera producido la lesión patrimonial, o a partir del momento en que hubiesen cesado sus efectos lesivos, si fuesen de carácter continuo. Cuando existan daños de carácter físico o psíquico a las personas, el plazo de prescripción será de dos años. Los plazos de prescripción previstos en este artículo, se interrumpirán al iniciarse el procedimiento de reclamación, a través de los cuales se impugne la legalidad de los actos administrativos que probablemente produjeron los daños o perjuicios. Párrafo reformado DOF 12-06-2009</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 25. DOF. [p. 6]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 26</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-q">ARTÍCULO 26.- Los reclamantes afectados podrán celebrar convenio con los entes públicos federales, a fin de dar por concluida la controversia, mediante la fijación y el pago de la indemnización que las partes acuerden. Para la validez de dicho convenio se requerirá, según sea el caso, la aprobación por parte de la contraloría interna o del órgano de vigilancia correspondiente. CAPÍTULO IV De la Concurrencia</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 26. DOF. [p. 6]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 27</span><span class="lw-pg">p. 6</span></div><blockquote class="lw-q">ARTÍCULO 27.- En caso de concurrencia acreditada en términos del</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 27. DOF. [p. 6]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 28</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 28.- En el supuesto de que el reclamante se encuentre entre los causantes de la lesión cuya reparación solicita, la proporción cuantitativa de su participación en el daño y perjuicio causado se deducirá del monto de la indemnización total.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 28. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 29</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 29.- En el supuesto de que entre los causantes de la lesión patrimonial reclamada no se pueda identificar su exacta participación en la producción de la misma, se establecerá entre ellos una responsabilidad solidaria frente al reclamante, debiéndose distribuir el pago de la indemnización en partes iguales entre todos los cocausantes.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 29. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 30</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 30.- En el supuesto de que las reclamaciones deriven de hechos o actos dañosos producidos como consecuencia de una concesión de servicio público por parte de la Administración Pública Federal, y las lesiones patrimoniales hayan tenido como causa una determinación del concesionante que sea de ineludible cumplimiento para el concesionario, el Estado responderá directamente. Los concesionarios tendrán la obligación de contratar seguros u otorgar garantías a favor del concesionante, para el caso de que la lesión reclamada haya sido ocasionada por la actividad del concesionario y no se derive de una determinación del concesionante. CAPÍTULO V Del Derecho del Estado de Repetir contra los Servidores Públicos</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 30. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 31</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 31.- El Estado podrá repetir de los servidores públicos el pago de la indemnización cubierta a los particulares cuando, previa substanciación del procedimiento administrativo disciplinario previsto en la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos, se determine su responsabilidad, y que la falta administrativa haya tenido el carácter de infracción grave. El monto que se exija al servidor público por este concepto formará parte de la sanción económica que se le aplique. La gravedad de la infracción se calificará de acuerdo con los criterios que establece la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos. Además, se tomarán en cuenta los siguientes criterios: Los estándares promedio de la actividad administrativa, la perturbación de la misma, la existencia o no de intencionalidad, la responsabilidad profesional y su rela</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 31. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 32</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 32.- El Estado podrá, también, instruir igual procedimiento a los servidores públicos por él nombrados, designados o contratados y, en general, a toda persona que desempeñe un empleo, cargo o comisión de cualquier naturaleza en la Administración Pública Federal, cuando le hayan ocasionado daños y perjuicios en sus bienes y derechos derivado de faltas o infracciones administrativas graves. Lo anterior, sin perjuicio de lo dispuesto por otras leyes aplicables en la materia.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 32. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 33</span><span class="lw-pg">p. 7</span></div><blockquote class="lw-q">ARTÍCULO 33.- Los servidores públicos podrán impugnar las resoluciones administrativas por las que se les imponga la obligación de resarcir los daños y perjuicios que el Estado haya pagado con motivo de los reclamos indemnizatorios respectivos, a través del recurso de revocación, o ante el Tribunal Federal de Justicia Fiscal y Administrativa, en términos de la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos. ---</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 33. DOF. [p. 7]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 34</span><span class="lw-pg">p. 8</span></div><blockquote class="lw-q">ARTÍCULO 34.- La presentación de reclamaciones por responsabilidad patrimonial del Estado interrumpirá los plazos de prescripción que la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos determina para iniciar el procedimiento administrativo disciplinario a los servidores públicos, los cuales se reanudarán cuando quede firme la resolución o sentencia definitiva que al efecto se dicte en el primero de los procedimientos mencionados.</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 34. DOF. [p. 8]</div></div>
+<div class="lw-card"><div class="lw-hdr"><span class="lw-badge lfrpe">LFRPE</span><span class="lw-title">Artículo 35</span><span class="lw-pg">p. 8</span></div><blockquote class="lw-q">ARTÍCULO 35.- Las cantidades que se obtengan con motivo de las sanciones económicas que las autoridades competentes impongan a los servidores públicos, en términos de lo dispuesto por la Ley Federal de Responsabilidades Administrativas de los Servidores Públicos se adicionarán, según corresponda, al monto de los recursos previstos para cubrir las obligaciones indemnizatorias derivadas de la responsabilidad patrimonial de los entes públicos federales. ARTÍCULO SEGUNDO.- ......... ARTÍCULO TERCERO.- ......... TRANSITORIOS PRIMERO.- La presente Ley entrará en vigor el 1o. de enero del año 2005. SEGUNDO.- Los asuntos que se encuentren en trámite en los entes públicos federales, relacionados con la indemnización a los particulares derivada de las faltas administrativas en que hubieren incurrido los servidores públicos, se atenderán hasta su total terminación de acuerdo con las disposiciones a</blockquote><div class="lw-apa"><span>APA 7 —</span> Cámara de Diputados. (2004; última reforma 2023). Ley Federal de Responsabilidad Patrimonial del Estado, artículo 35. DOF. [p. 8]</div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -860,29 +446,18 @@ const ALL_TEMAS=["Otro", "Indemnización", "Daño moral", "Competencia/Procedimi
 const EPOCHS={"VII": {"presidente": "Juan Manuel Jiménez Illescas (2011-2013) / Manuel Luciano Hallivis Pelayo (2014-2016)", "magistrados": ["Francisco Cuevas Godínez", "Manuel Luciano Hallivis Pelayo", "Juan Manuel Jiménez Illescas", "Nora Elizabeth Urby Genel", "Juan Ángel Chávez Ramírez", "Alfredo Salgado Loyo", "Carlos Mena Adame", "Víctor Martín Orduña Muñoz", "Magda Zulema Mosri Gutiérrez", "Rafael Anzures Uribe", "Rafael Estrada Sámano", "Guillermo Domínguez Belloc", "Luis Humberto Delgadillo Gutiérrez", "Olga Hernández Espíndola"]}, "VIII": {"presidente": "Manuel Luciano Hallivis Pelayo (2014-2016) / Carlos Chaurand Arzate (2017-2019)", "magistrados": ["Manuel Luciano Hallivis Pelayo", "Carlos Chaurand Arzate", "Rafael Estrada Sámano", "Juan Ángel Chávez Ramírez", "Rafael Anzures Uribe", "Alfredo Salgado Loyo", "Víctor Martín Orduña Muñoz", "Carlos Mena Adame", "Juan Manuel Jiménez Illescas", "Magda Zulema Mosri Gutiérrez", "Nora Elizabeth Urby Genel", "Guillermo Valls Esponda", "Julián Alfonso Olivas Ugalde", "Juan Carlos Roa Jacobo"]}, "IX": {"presidente": "Rafael Anzures Uribe (2020-2022) / Guillermo Valls Esponda (2023-2025) / José Ramón Amieva Gálvez (2026-2028)", "magistrados": ["Rafael Anzures Uribe", "Guillermo Valls Esponda", "José Ramón Amieva Gálvez", "Nora Elizabeth Urby Genel", "Carlos Chaurand Arzate", "Julián Alfonso Olivas Ugalde", "Juan Manuel Jiménez Illescas", "Magda Zulema Mosri Gutiérrez", "Víctor Martín Orduña Muñoz", "Alfredo Salgado Loyo", "Carlos Mena Adame", "Rafael Estrada Sámano", "Luz María Anaya Domínguez", "Julio Ángel Sabines Chesterking", "Eduardo Santillán Pérez", "Selene Cruz Alcalá", "Juan Carlos Roa Jacobo"]}};
 const PG=20;
 let st={view:'lista',page:0,sel:-1,filtered:[],temasDrill:null,leyes:false};
-
 const isMob=()=>innerWidth<768;
 const isTab=()=>innerWidth<1100;
 
-function openSB(){
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('sbBd').classList.add('show');
-}
-function closeSB(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sbBd').classList.remove('show');
-}
+function openSB(){document.getElementById('sidebar').classList.add('open');document.getElementById('sbBd').classList.add('show');}
+function closeSB(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbBd').classList.remove('show');}
 function closeDetail(){
   st.sel=-1;
   const dp=document.getElementById('dp');
   if(dp){dp.classList.remove('open');document.getElementById('detBd').classList.remove('show');}
   document.querySelectorAll('.li').forEach(l=>l.classList.remove('sel'));
 }
-function openDP(){
-  if(!isTab())return;
-  const dp=document.getElementById('dp');
-  if(dp){dp.classList.add('open');document.getElementById('detBd').classList.add('show');}
-}
+function openDP(){if(!isTab())return;const dp=document.getElementById('dp');if(dp){dp.classList.add('open');document.getElementById('detBd').classList.add('show');}}
 
 function getF(){return{
   src:document.querySelector('input[name=fSrc]:checked')?.value||'',
@@ -906,42 +481,31 @@ function applyFilters(){
     return true;
   });
   st.page=0;st.sel=-1;
-  document.getElementById('countPill').textContent=
-    st.filtered.length+' criterio'+(st.filtered.length!==1?'s':'');
-  renderChips();
-  renderView();
+  document.getElementById('countPill').textContent=st.filtered.length+' criterio'+(st.filtered.length!==1?'s':'');
+  renderChips();renderView();
 }
 
 function clearFilters(){
   document.querySelector('input[name=fSrc][value=""]').checked=true;
   document.querySelectorAll('.f-tipo,.f-sala,.f-tema').forEach(c=>c.checked=false);
-  document.getElementById('fYF').value=2013;
-  document.getElementById('fYT').value=2026;
+  document.getElementById('fYF').value=2013;document.getElementById('fYT').value=2026;
   document.getElementById('sbSearch').value='';
   applyFilters();
 }
 
 function renderChips(){
-  const f=getF(); const chips=[];
-  if(f.src) chips.push([`Fuente: ${f.src}`,`document.querySelector('input[name=fSrc][value=""]').checked=true;applyFilters()`]);
+  const f=getF();const chips=[];
+  if(f.src)chips.push([`Fuente: ${f.src}`,`document.querySelector('input[name=fSrc][value=""]').checked=true;applyFilters()`]);
   f.tipo.forEach(t=>chips.push([`Tipo: ${t}`,`unchk('.f-tipo','${t}')`]));
   f.sala.forEach(t=>chips.push([t,`unchk('.f-sala','${escA(t)}')`]));
   f.tema.forEach(t=>chips.push([t,`unchk('.f-tema','${escA(t)}')`]));
-  if(f.q) chips.push([`"${f.q}"`,`document.getElementById('sbSearch').value='';applyFilters()`]);
-  if(f.yF!==2013||f.yT!==2026) chips.push([`${f.yF}–${f.yT}`,`document.getElementById('fYF').value=2013;document.getElementById('fYT').value=2026;applyFilters()`]);
+  if(f.q)chips.push([`"${f.q}"`,`document.getElementById('sbSearch').value='';applyFilters()`]);
+  if(f.yF!==2013||f.yT!==2026)chips.push([`${f.yF}–${f.yT}`,`document.getElementById('fYF').value=2013;document.getElementById('fYT').value=2026;applyFilters()`]);
   const fc=document.getElementById('fchips');
-  fc.innerHTML=chips.map(([t,rm])=>
-    `<span class="fchip">${esc(t)}<button class="fchip-x" onclick="${rm}" aria-label="Quitar filtro">
-    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button></span>`
-  ).join('');
-  fc.style.cssText=chips.length?'padding:5px 14px;min-height:32px':'padding:0;min-height:0;border-bottom:none';
+  fc.innerHTML=chips.map(([t,rm])=>`<span class="fchip">${esc(t)}<button class="fchip-x" onclick="${rm}">✕</button></span>`).join('');
+  fc.style.cssText=chips.length?'padding:5px 14px;min-height:30px':'padding:0;min-height:0;border-bottom:none';
 }
-
-function unchk(sel,val){
-  const el=document.querySelector(`${sel}[value="${val}"]`);
-  if(el)el.checked=false;applyFilters();
-}
+function unchk(sel,val){const el=document.querySelector(`${sel}[value="${val}"]`);if(el)el.checked=false;applyFilters();}
 
 function setView(v){
   st.view=v;st.page=0;st.sel=-1;st.temasDrill=null;st.leyes=false;
@@ -953,164 +517,96 @@ function showLeyes(){
   st.leyes=true;
   document.querySelectorAll('.vtab').forEach(t=>t.classList.remove('active'));
   document.getElementById('btnLeyes').classList.add('active');
-  document.getElementById('vw').innerHTML=
-    '<div class="leyes-view"><div class="leyes-inner">'+
-    document.getElementById('leyes-raw').innerHTML+'</div></div>';
+  document.getElementById('vw').innerHTML='<div class="leyes-view"><div class="leyes-inner">'+document.getElementById('leyes-raw').innerHTML+'</div></div>';
 }
-function renderView(){
-  if(st.leyes)return;
-  if(st.view==='lista')renderLista();
-  else if(st.view==='temas')renderTemas();
-  else renderTimeline();
-}
+function renderView(){if(st.leyes)return;if(st.view==='lista')renderLista();else if(st.view==='temas')renderTemas();else renderTimeline();}
 
 function renderLista(){
   const items=st.filtered,tot=items.length;
   const pgs=Math.max(1,Math.ceil(tot/PG));
   st.page=Math.min(st.page,pgs-1);
   const s=st.page*PG,pg=items.slice(s,s+PG);
-  const tipoLbl={J:'Jurispr.',P:'Precedente',TA:'T. Aislada'};
   const lhtml=pg.map((d,i)=>{
     const gi=s+i;
-    const tc=d.temas.slice(0,2).map(t=>`<span class="tc-pill">${esc(t)}</span>`).join('');
-    return `<div class="li${gi===st.sel?' sel':''}" data-idx="${gi}" onclick="selItem(${gi})">
+    const tc=d.temas.slice(0,2).map(t=>`<span class="tp">${esc(t)}</span>`).join('');
+    const srcLbl=d.source==='SCJN'?`${d.source} · ${d.sala}`:d.source+' · '+d.sala;
+    return`<div class="li${gi===st.sel?' sel':''}" data-idx="${gi}" onclick="selItem(${gi})">
 <div class="li-bar ${d.source}"></div>
 <div class="li-body">
-<div class="li-row1">
-  <span class="tipo-dot ${d.tipo}"></span>
-  <span class="li-tipo">${tipoLbl[d.tipo]||d.tipo}</span>
-  <span class="li-src">· ${esc(d.source)} · ${esc(d.sala)}</span>
-  <span class="li-yr">${d.year||'?'}</span>
-</div>
+<div class="li-meta"><span class="li-tipo ${d.tipo}">${d.tipo}</span><span class="li-src">${esc(srcLbl)}</span><span class="li-yr">${d.year||'?'}</span></div>
 <div class="li-rub">${esc(d.rubro)}</div>
 <div class="li-tags">${tc}</div>
 </div></div>`;
   }).join('');
-  const empty=tot===0
-    ?'<div style="padding:32px;text-align:center;color:var(--mu2);font-size:var(--f13)">Sin resultados con los filtros seleccionados</div>':'';
+  const empty=tot===0?'<div style="padding:32px;text-align:center;color:var(--mu2);font-size:var(--f13)">Sin resultados con los filtros actuales</div>':'';
   document.getElementById('vw').innerHTML=`
 <div class="lista-layout">
 <div class="list-panel">
-  <div class="list-scroll" id="ls">${lhtml}${empty}</div>
-  <div class="list-foot">
-    <div class="pager">
-      <button class="pg-btn" onclick="prevPg()" ${st.page===0?'disabled':''}>← Anterior</button>
-      <span class="pg-info">${st.page+1} / ${pgs}</span>
-      <button class="pg-btn" onclick="nextPg()" ${st.page>=pgs-1?'disabled':''}>Siguiente →</button>
-    </div>
-    <div class="kb-hint"><kbd>↑</kbd><kbd>↓</kbd> navegar &nbsp;<kbd>Esc</kbd> cerrar</div>
-  </div>
+<div class="list-scroll" id="ls">${lhtml}${empty}</div>
+<div class="list-foot">
+<div class="pager"><button class="pg-btn" onclick="prevPg()" ${st.page===0?'disabled':''}>← Anterior</button><span class="pg-info">${st.page+1} / ${pgs}</span><button class="pg-btn" onclick="nextPg()" ${st.page>=pgs-1?'disabled':''}>Siguiente →</button></div>
+<div class="kb-hint"><kbd>↑</kbd><kbd>↓</kbd> navegar &nbsp;·&nbsp; <kbd>Esc</kbd> cerrar</div>
+</div>
 </div>
 <div class="detail-panel" id="dp">
-  <button class="d-back" onclick="closeDetail()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-    Volver a la lista
-  </button>
-  <div class="d-empty">
-    <div class="d-empty-svg">
-      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
-        <path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/>
-        <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72M19.13 13.69c-4.03 5.31-8.41 7.11-15.13 5.77"/>
-      </svg>
-    </div>
-    <div class="d-empty-text">Selecciona un criterio de la lista para ver su contenido</div>
-  </div>
+<button class="d-back" onclick="closeDetail()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Volver a la lista</button>
+<div class="d-empty">
+<div class="d-empty-ico"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2L2 7h20z"/></svg></div>
+<div class="d-empty-txt">Selecciona un criterio para leer su contenido</div>
+</div>
 </div>
 </div>`;
-  if(st.sel>=s&&st.sel<s+PG){
-    renderDetail(st.sel);
-    const el=document.querySelector(`.li[data-idx="${st.sel}"]`);
-    if(el)el.scrollIntoView({block:'nearest'});
-  }
+  if(st.sel>=s&&st.sel<s+PG){renderDetail(st.sel);const el=document.querySelector(`.li[data-idx="${st.sel}"]`);if(el)el.scrollIntoView({block:'nearest'});}
 }
 
 function selItem(gi){
   st.sel=gi;
-  document.querySelectorAll('.li').forEach(el=>{
-    const i=parseInt(el.dataset.idx);
-    el.classList.toggle('sel',i===gi);
-    if(i===gi)el.scrollIntoView({block:'nearest'});
-  });
-  renderDetail(gi);
-  if(isTab())openDP();
+  document.querySelectorAll('.li').forEach(el=>{const i=parseInt(el.dataset.idx);el.classList.toggle('sel',i===gi);if(i===gi)el.scrollIntoView({block:'nearest'});});
+  renderDetail(gi);if(isTab())openDP();
 }
 
 function renderDetail(gi){
-  const d=st.filtered[gi]; if(!d)return;
-  const dp=document.getElementById('dp'); if(!dp)return;
-  const tipoFull={J:'Jurisprudencia',P:'Precedente',TA:'Tesis aislada'};
-  const badges=[
-    `<span class="badge ${d.tipo}">${tipoFull[d.tipo]||d.tipo}</span>`,
-    `<span class="badge ${d.source}">${esc(d.source)}</span>`,
-    `<span class="badge sala">${esc(d.sala)}</span>`,
-    `<span class="badge yr">${d.year||'?'}</span>`,
-  ].join('');
-  const temas=d.temas.map(t=>`<span class="dtag" onclick="filterByTema('${escA(t)}')">${esc(t)}</span>`).join('');
-  const title=d.url
-    ?`<a href="${escA(d.url)}" target="_blank" rel="noopener">${esc(d.rubro)}</a>`
-    :esc(d.rubro);
+  const d=st.filtered[gi];if(!d)return;
+  const dp=document.getElementById('dp');if(!dp)return;
+  const TL={J:'Jurisprudencia',P:'Precedente',TA:'Tesis aislada'};
+  const badges=[`<span class="db ${d.tipo}">${TL[d.tipo]||d.tipo}</span>`,`<span class="db ${d.source}">${esc(d.source)}</span>`,`<span class="db sala">${esc(d.sala)}</span>`,`<span class="db yr">${d.year||'?'}</span>`].join('');
+  const temas=d.temas.map(t=>`<span class="dtm" onclick="filterByTema('${escA(t)}')">${esc(t)}</span>`).join('');
+  const title=d.url?`<a href="${escA(d.url)}" target="_blank" rel="noopener">${esc(d.rubro)}</a>`:esc(d.rubro);
+  const icoCtx=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>`;
+  const icoJ=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V2m-8 6.5L12 2l8 6.5"/><path d="M4 8.5L12 13l8-4.5M4 15.5L12 20l8-4.5"/></svg>`;
+  const icoI=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
   let secs='';
-  const icoCtx=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>`;
-  const icoJ=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V2m-8 6.5L12 2l8 6.5"/><path d="M4 8.5L12 13l8-4.5M4 15.5L12 20l8-4.5"/></svg>`;
-  const icoI=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
   if(d.contexto)secs+=dsec(icoCtx,'Contexto / Hechos',d.contexto);
   if(d.criterio&&d.criterio!==d.rubro)secs+=dsec(icoJ,'Criterio jurídico',d.criterio);
   if(d.implicacion)secs+=dsec(icoI,'Implicación jurídica',d.implicacion);
   let attr='';
   if(d.source==='SCJN'&&d.ponente){
-    attr=`<div class="d-pon">
-<img class="d-photo" data-ponente="${escA(d.ponente)}" alt="${escA(d.ponente)}">
-<div>
-  <div class="pon-lbl">Ministro ponente</div>
-  <div class="pon-name">${esc(d.ponente)}</div>
-  <div class="pon-sala">${esc(d.sala)}</div>
-</div></div>`;
-  } else if(d.source==='TFJA'&&d.epoch){
+    attr=`<div class="d-pon"><img class="d-photo" data-ponente="${escA(d.ponente)}" alt="${escA(d.ponente)}"><div><div class="pon-lbl">Ministro ponente</div><div class="pon-name">${esc(d.ponente)}</div><div class="pon-sala">${esc(d.sala)}</div></div></div>`;
+  }else if(d.source==='TFJA'&&d.epoch){
     const ep=EPOCHS[d.epoch]||{magistrados:[]};
     const lbl={VII:'Séptima Época',VIII:'Octava Época',IX:'Novena Época'}[d.epoch]||d.epoch;
-    const icoMags=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
-    attr=`<div class="d-mags">
-<div class="mags-hdr">${icoMags} Magistrados · ${lbl}</div>
-<div class="mags-ch">${ep.magistrados.map(m=>`<span class="mc">${esc(m)}</span>`).join('')}</div>
-</div>`;
+    attr=`<div class="d-mags"><div class="mags-lbl">Magistrados · ${lbl}</div><div class="mags-ch">${ep.magistrados.map(m=>`<span class="mc">${esc(m)}</span>`).join('')}</div></div>`;
   }
   const icoExt=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-  const icoCopy=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
-  let acts=d.url?`<a class="act act-primary" href="${escA(d.url)}" target="_blank" rel="noopener">${icoExt} Abrir en SJF2</a>`:'';
-  acts+=`<button class="act act-secondary" onclick="copyAPA(${gi})">${icoCopy} Copiar APA 7</button>`;
-  if(!d.url) acts+=`<button class="act act-secondary" onclick="copyClave(${gi})">${icoCopy} Copiar clave</button>`;
+  const icoCp=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+  let acts=d.url?`<a class="act act-p" href="${escA(d.url)}" target="_blank" rel="noopener">${icoExt} Abrir en SJF2</a>`:'';
+  acts+=`<button class="act act-s" onclick="copyAPA(${gi})">${icoCp} Copiar APA 7</button>`;
+  if(!d.url)acts+=`<button class="act act-s" onclick="copyClave(${gi})">${icoCp} Copiar clave</button>`;
   const back=dp.querySelector('.d-back')?.outerHTML||'';
   dp.innerHTML=back+`<div class="d-content">
-<div class="d-src-bar">${badges}<span class="d-clave">${esc(d.clave)}</span></div>
+<div class="d-badges">${badges}<span class="d-clave">${esc(d.clave)}</span></div>
 <div class="d-rub">${title}</div>
-<div class="d-tema-tags">${temas}</div>
-<div class="d-secs">${secs}</div>
-${attr}
-<div class="d-apa">
-  <div class="apa-row">
-    <span class="apa-lbl">APA 7</span>
-    <button class="copy-btn" onclick="copyAPA(${gi})">${icoCopy} Copiar</button>
-  </div>
-  <div class="apa-body">${esc(d.apa7)}</div>
-</div>
+<div class="d-temas">${temas}</div>
+<div class="d-secs">${secs}</div>${attr}
+<div class="d-apa"><div class="apa-row"><span class="apa-lbl">APA 7</span><button class="apa-copy" onclick="copyAPA(${gi})">${icoCp} Copiar</button></div><div class="apa-body">${esc(d.apa7)}</div></div>
 <div class="d-actions">${acts}</div>
 </div>`;
   dp.querySelectorAll('[data-ponente]').forEach(img=>{img.src=PHOTOS[img.dataset.ponente]||PLACEHOLDER;});
   dp.scrollTop=0;
 }
 
-function dsec(ico,lbl,body){
-  return`<div class="d-sec">
-<div class="d-sec-h"><span class="d-sec-ico">${ico}</span><span class="d-sec-lbl">${lbl}</span></div>
-<div class="d-sec-txt">${esc(body)}</div>
-</div>`;
-}
-
-function filterByTema(t){
-  const cb=document.querySelector(`.f-tema[value="${t}"]`);
-  if(cb){cb.checked=true;setView('lista');applyFilters();}
-}
-
+function dsec(ico,lbl,body){return`<div class="d-sec"><div class="d-sec-h"><span class="d-sec-ico">${ico}</span><span class="d-sec-lbl">${lbl}</span></div><div class="d-sec-txt">${esc(body)}</div></div>`;}
+function filterByTema(t){const cb=document.querySelector(`.f-tema[value="${t}"]`);if(cb){cb.checked=true;setView('lista');applyFilters();}}
 function prevPg(){if(st.page>0){st.page--;st.sel=-1;renderLista();}}
 function nextPg(){const p=Math.ceil(st.filtered.length/PG);if(st.page<p-1){st.page++;st.sel=-1;renderLista();}}
 
@@ -1120,18 +616,9 @@ function renderTemas(){
   const mx=Math.max(...Object.values(cnt),1);
   const cards=ALL_TEMAS.filter(t=>cnt[t]).map(t=>{
     const pct=Math.round(cnt[t]/mx*100);
-    return`<div class="tc-card" onclick="drillTema('${escA(t)}')">
-<div class="tc-n">${cnt[t]}</div>
-<div class="tc-name">${esc(t)}</div>
-<div class="tc-sub">criterio${cnt[t]!==1?'s':''}</div>
-<div class="tc-bar"><div class="tc-fill" style="width:${pct}%"></div></div>
-</div>`;
+    return`<div class="tc-card" onclick="drillTema('${escA(t)}')"><div class="tc-n">${cnt[t]}</div><div class="tc-name">${esc(t)}</div><div class="tc-sub">criterio${cnt[t]!==1?'s':''}</div><div class="tc-bar"><div class="tc-fill" style="width:${pct}%"></div></div></div>`;
   }).join('');
-  document.getElementById('vw').innerHTML=`<div class="temas-view">
-<div class="v-hdr"><h2>Criterios por tema clave</h2>
-<p>Temas extraídos del contenido. Haz clic para explorar los criterios de cada tema.</p></div>
-<div class="temas-grid">${cards||'<p style="color:var(--mu2)">Sin resultados</p>'}</div>
-</div>`;
+  document.getElementById('vw').innerHTML=`<div class="temas-view"><div class="v-head"><h2>Criterios por tema</h2><p>Temas extraídos del contenido. Haz clic en un tema para explorar sus criterios.</p></div><div class="temas-grid">${cards||'<p style="color:var(--mu2)">Sin resultados</p>'}</div></div>`;
 }
 
 function drillTema(t){st.temasDrill=t;renderDrill(t);}
@@ -1139,30 +626,12 @@ function renderDrill(tema){
   const items=st.filtered.filter(d=>d.temas.includes(tema));
   const cards=items.map(d=>{
     const gi=st.filtered.indexOf(d);
-    const tipoFull={J:'Jurisprudencia',P:'Precedente',TA:'Tesis aislada'};
-    return`<div class="dd-item" onclick="openItem(${gi})">
-<div class="dd-meta">
-  <span class="badge ${d.tipo}" style="font-size:.6rem">${d.tipo}</span>
-  <span class="badge ${d.source}" style="font-size:.6rem">${d.source}</span>
-  <span style="font-size:var(--f11);color:var(--mu)">${esc(d.sala)} · ${d.year||'?'}</span>
-</div>
-<div class="dd-rub">${esc(d.rubro)}</div>
-</div>`;
+    return`<div class="dd-item" onclick="openItem(${gi})"><div class="dd-meta"><span class="db ${d.tipo}" style="font-size:.6rem">${d.tipo}</span><span class="db ${d.source}" style="font-size:.6rem">${d.source}</span><span style="font-size:var(--f10);color:var(--mu)">${esc(d.sala)} · ${d.year||'?'}</span></div><div class="dd-rub">${esc(d.rubro)}</div></div>`;
   }).join('');
-  document.getElementById('vw').innerHTML=`<div class="drilldown">
-<button class="dd-back" onclick="backTemas()">
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-  Volver a temas
-</button>
-<div class="dd-title">${esc(tema)} <span style="font-size:var(--f15);font-weight:400;color:var(--mu)">(${items.length} criterios)</span></div>
-<div class="dd-grid">${cards||'<p style="color:var(--mu2)">Sin criterios</p>'}</div>
-</div>`;
+  document.getElementById('vw').innerHTML=`<div class="drilldown"><button class="dd-back" onclick="backTemas()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Volver a temas</button><div class="dd-title">${esc(tema)} <span style="font-size:var(--f15);font-weight:400;color:var(--mu)">(${items.length} criterios)</span></div><div class="dd-grid">${cards||'<p style="color:var(--mu2)">Sin criterios</p>'}</div></div>`;
 }
 function backTemas(){st.temasDrill=null;renderTemas();}
-function openItem(gi){
-  setView('lista');st.page=Math.floor(gi/PG);st.sel=gi;
-  renderLista();setTimeout(()=>{renderDetail(gi);if(isTab())openDP();},50);
-}
+function openItem(gi){setView('lista');st.page=Math.floor(gi/PG);st.sel=gi;renderLista();setTimeout(()=>{renderDetail(gi);if(isTab())openDP();},50);}
 
 function renderTimeline(){
   const by={};st.filtered.forEach(d=>{const y=d.year||'?';if(!by[y])by[y]=[];by[y].push(d);});
@@ -1171,44 +640,22 @@ function renderTimeline(){
     const its=by[y];
     const ih=its.map(d=>{
       const gi=st.filtered.indexOf(d);
-      const tc=d.temas.slice(0,1).map(t=>`<span class="tc-pill">${esc(t)}</span>`).join('');
+      const tc=d.temas.slice(0,1).map(t=>`<span class="tp">${esc(t)}</span>`).join('');
       const rb=d.rubro.length>110?d.rubro.slice(0,110)+'…':d.rubro;
-      return`<div class="tl-item" onclick="openItem(${gi})">
-<div class="tl-meta">
-  <span class="badge ${d.tipo}" style="font-size:.6rem">${d.tipo}</span>
-  <span class="badge ${d.source}" style="font-size:.6rem">${d.source}</span>
-  <span style="font-size:var(--f11);color:var(--mu)">${esc(d.sala)}</span>
-  ${tc}
-</div>
-<div class="tl-rub">${esc(rb)}</div>
-</div>`;
+      return`<div class="tl-item" onclick="openItem(${gi})"><div class="tl-meta"><span class="db ${d.tipo}" style="font-size:.6rem">${d.tipo}</span><span class="db ${d.source}" style="font-size:.6rem">${d.source}</span><span style="font-size:var(--f10);color:var(--mu)">${esc(d.sala)}</span>${tc}</div><div class="tl-rub">${esc(rb)}</div></div>`;
     }).join('');
-    return`<div class="tl-yr">
-<div class="tl-yr-hdr">
-  <div class="tl-yr-lbl">${y}</div>
-  <div class="tl-yr-line"></div>
-  <div class="tl-yr-cnt">${its.length} criterio${its.length!==1?'s':''}</div>
-</div>
-<div class="tl-items">${ih}</div>
-</div>`;
+    return`<div class="tl-yr"><div class="tl-yr-hdr"><div class="tl-yr-lbl">${y}</div><div class="tl-yr-line"></div><div class="tl-yr-cnt">${its.length} criterio${its.length!==1?'s':''}</div></div><div class="tl-items">${ih}</div></div>`;
   }).join('');
-  document.getElementById('vw').innerHTML=`<div class="timeline-view">
-${html||'<p style="color:var(--mu2);text-align:center;padding:32px">Sin resultados</p>'}
-</div>`;
+  document.getElementById('vw').innerHTML=`<div class="timeline-view">${html||'<p style="color:var(--mu2);text-align:center;padding:32px">Sin resultados</p>'}</div>`;
 }
 
 document.addEventListener('keydown',ev=>{
   if(ev.target.tagName==='INPUT'||ev.target.tagName==='TEXTAREA')return;
   if(st.view!=='lista'||st.leyes)return;
   const tot=st.filtered.length,pgs=Math.ceil(tot/PG),s=st.page*PG,end=Math.min(s+PG,tot);
-  if(ev.key==='ArrowDown'){ev.preventDefault();
-    const n=st.sel<0?s:st.sel+1;
-    if(n>=end){if(st.page<pgs-1){st.page++;st.sel=n;renderLista();}return;}
-    selItem(n);
-  }else if(ev.key==='ArrowUp'){ev.preventDefault();
-    if(st.sel<=s&&st.page>0){st.page--;renderLista();return;}
-    if(st.sel>s)selItem(st.sel-1);
-  }else if(ev.key==='Escape')closeDetail();
+  if(ev.key==='ArrowDown'){ev.preventDefault();const n=st.sel<0?s:st.sel+1;if(n>=end){if(st.page<pgs-1){st.page++;st.sel=n;renderLista();}return;}selItem(n);}
+  else if(ev.key==='ArrowUp'){ev.preventDefault();if(st.sel<=s&&st.page>0){st.page--;renderLista();return;}if(st.sel>s)selItem(st.sel-1);}
+  else if(ev.key==='Escape')closeDetail();
 });
 
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
