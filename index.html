@@ -181,8 +181,8 @@ input{font-family:inherit}
 .list-scroll::-webkit-scrollbar-track{background:transparent}
 .list-scroll::-webkit-scrollbar-thumb{background:var(--g300);border-radius:2px}
 .list-foot{border-top:1px solid var(--g200);background:var(--white);flex-shrink:0;padding:7px 12px}
-.pager{display:flex;align-items:center;justify-content:space-between}
-.pg-btn{display:flex;align-items:center;gap:3px;padding:4px 10px;border-radius:var(--r6);
+.pager{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.pg-btn{display:flex;align-items:center;gap:3px;padding:4px 10px;border-radius:var(--r6);flex-shrink:0;
   border:1px solid var(--g200);background:var(--white);font-size:12px;font-weight:500;
   color:var(--g700);transition:all .1s;cursor:pointer}
 .pg-btn:hover:not([disabled]){background:var(--blue);color:#fff;border-color:var(--blue)}
@@ -503,6 +503,7 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
   .d-pon-row{padding:44px 16px 12px}
   .d-content{padding:14px 16px 36px}
   .bottom-nav{display:flex}
+  .toolbar{display:none}
   .main{padding-bottom:54px}
   .lib-view,.temas-view,.drilldown,.timeline-view,.leyes-view{padding:14px}
   .lib-top{align-items:flex-start;flex-direction:column;margin-bottom:14px}
@@ -1050,7 +1051,7 @@ function renderLista(){
     return`<div class="li ${d.source}${gi===st.sel?' sel':''}" data-idx="${gi}" onclick="selItem(${gi})"><div class="li-spine"></div><div class="li-body"><div class="li-top"><span class="bdg bdg-${d.tipo}">${d.tipo==='J'?'Jurispr.':d.tipo==='TA'?'T. Aislada':'Prec.'}</span><span class="bdg bdg-${d.source}">${d.source}</span><span class="li-sala">${esc(d.sala)}</span><span class="li-yr">${d.year||'?'}</span></div><div class="li-rub">${esc(d.rubro)}</div><div class="li-foot">${foot}</div></div></div>`;
   }).join('');
   const empty=tot===0?`<div class="list-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Sin resultados</div>`:'';
-  document.getElementById('vw').innerHTML=`<div class="lista-layout"><div class="list-pane"><div class="list-scroll" id="ls">${lhtml}${empty}</div><div class="list-foot"><div class="pager"><button class="pg-btn" onclick="prevPg()" ${st.page===0?'disabled':''}>← Anterior</button><span class="pg-info">${st.page+1} / ${pgs}</span><button class="pg-btn" onclick="nextPg()" ${st.page>=pgs-1?'disabled':''}>Siguiente →</button></div><div class="kb-hint"><kbd>↑</kbd><kbd>↓</kbd> navegar · <kbd>Esc</kbd> cerrar</div></div></div><div class="detail-panel" id="dp"><div class="sheet-hdl"></div><button class="d-back" onclick="closeDetail()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Regresar</button><div class="d-scroll"><div class="d-empty"><div class="d-empty-ico"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".7" stroke-linecap="round"><path d="M12 3L4 7v4c0 4.4 3.4 8.5 8 9.5 4.6-1 8-5.1 8-9.5V7z"/></svg></div><div class="d-empty-txt">Selecciona un criterio para ver su contenido completo</div><div class="d-empty-hint">↑ ↓ navegar con el teclado</div></div></div></div></div>`;
+  document.getElementById('vw').innerHTML=`<div class="lista-layout"><div class="list-pane"><div class="list-scroll" id="ls">${lhtml}${empty}</div><div class="list-foot"><div class="pager"><button class="pg-btn" onclick="prevPg()" ${st.page===0?'disabled':''}>← Anterior</button><span class="pg-info">Página ${st.page+1} de ${pgs}</span><button class="pg-btn" onclick="nextPg()" ${st.page>=pgs-1?'disabled':''}>Siguiente →</button></div><div class="kb-hint"><kbd>↑</kbd><kbd>↓</kbd> navegar · <kbd>Esc</kbd> cerrar</div></div></div><div class="detail-panel" id="dp"><div class="sheet-hdl"></div><button class="d-back" onclick="closeDetail()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Regresar</button><div class="d-scroll"><div class="d-empty"><div class="d-empty-ico"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".7" stroke-linecap="round"><path d="M12 3L4 7v4c0 4.4 3.4 8.5 8 9.5 4.6-1 8-5.1 8-9.5V7z"/></svg></div><div class="d-empty-txt">Selecciona un criterio para ver su contenido completo</div><div class="d-empty-hint">↑ ↓ navegar con el teclado</div></div></div></div></div>`;
   document.querySelectorAll('.li-pp[data-pon]').forEach(img=>{img.src=PHOTOS[img.dataset.pon]||PLACEHOLDER;});
   if(st.sel>=s&&st.sel<s+PG){renderDetail(st.sel);const el=document.querySelector(`.li[data-idx="${st.sel}"]`);if(el)el.scrollIntoView({block:'nearest'});}
 }
