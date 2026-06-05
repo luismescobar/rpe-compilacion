@@ -347,11 +347,16 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
 .lib-theme-track{grid-column:1 / -1;height:4px;background:var(--g100);border-radius:var(--rF);overflow:hidden}
 .lib-theme-fill{height:100%;background:var(--blue);border-radius:var(--rF)}
 .timeline-card{margin-top:18px;background:var(--white);border:1px solid var(--g200);border-radius:var(--r8);padding:14px 16px;box-shadow:var(--sh-xs)}
-.lib-year-map{display:grid;grid-template-columns:repeat(14,1fr);gap:5px;height:104px;align-items:end;margin-top:8px}
-.lib-year{display:grid;grid-template-rows:1fr auto;gap:6px;min-width:0}
-.lib-ybar{align-self:end;background:linear-gradient(#1558A8,#062245);border-radius:6px;min-height:7px;transition:opacity .12s,transform .12s}
-.lib-year:hover .lib-ybar{opacity:.78;transform:scaleY(1.05)}
-.lib-year span{font-size:10px;color:var(--g400);justify-self:center}
+.lib-year-map{display:flex;gap:4px;height:104px;align-items:flex-end;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.lib-year-map::-webkit-scrollbar{height:3px}.lib-year-map::-webkit-scrollbar-thumb{background:var(--g200);border-radius:2px}
+.lib-year{display:flex;flex-direction:column;align-items:center;min-width:38px;flex:1;height:100%;justify-content:flex-end}
+.lib-ybar-stack{display:flex;flex-direction:column;justify-content:flex-end;width:100%;flex:1}
+.lib-ybar{background:linear-gradient(180deg,#1558A8,#062245);border-radius:3px 3px 0 0;width:100%;min-height:4px;transition:opacity .12s}
+.lib-ybar.tfja{background:linear-gradient(180deg,var(--tfja),#024a7a)}
+.lib-year:hover .lib-ybar{opacity:.75}
+.lib-year span{font-size:9px;color:var(--g400);text-align:center;padding-top:3px;flex-shrink:0}
+.tl-map-leg{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap}
+.tl-map-leg span{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--g500)}
 
 /* READER CONTROLS */
 .reader-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;background:var(--white);
@@ -606,6 +611,24 @@ kbd{background:var(--g100);border:1px solid var(--g300);border-radius:3px;paddin
   .orient-period-grid{grid-template-columns:repeat(2,1fr)}
   .orient-summary{gap:6px}
 }
+
+/* timeline mejorado */
+.tl-breakdown{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.tl-bk-item{font-size:10.5px;padding:2px 7px;border-radius:var(--rF);font-weight:600}
+.tl-bk-item.scjn{background:var(--blue-100);color:var(--blue)}
+.tl-bk-item.tfja{background:var(--tfja-bg);color:var(--tfja)}
+.tl-bk-item.jur{background:#fef9c3;color:#854d0e}
+.tl-pon-card{display:flex;align-items:center;gap:10px;background:var(--g50);border:1px solid var(--g200);border-radius:var(--r8);padding:8px 12px;margin-bottom:10px;cursor:pointer;transition:all .12s}
+.tl-pon-card:hover{border-color:var(--blue);background:var(--blue-50)}
+.tl-pon-img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue-100);flex-shrink:0}
+.tl-pon-info{flex:1;min-width:0}
+.tl-pon-name{font-size:12px;font-weight:700;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-pon-stat{font-size:10.5px;color:var(--g500);margin-top:1px}
+.tl-pon-star{font-size:16px;color:#f59e0b;flex-shrink:0}
+.tl-star-badge{font-size:11px;color:#f59e0b;margin-left:2px}
+/* orient chart fix mobile */
+.orient-yr-sec .orient-yr-chart{overflow-x:auto}
+.orient-yr-inner{display:flex;align-items:flex-end;gap:4px;height:80px;min-width:560px;padding-bottom:2px}
 </style>
 </head>
 <body>
@@ -963,9 +986,12 @@ function renderBiblioteca(){
     law:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>`,
     mark:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3L4 7v4c0 4.4 3.4 8.5 8 9.5 4.6-1 8-5.1 8-9.5V7z"/><path d="M9 12l2 2 4-4"/></svg>`
   };
+  const BH=78;
   const yearMap=Array.from({length:YEAR_MAX-YEAR_MIN+1},(_,i)=>YEAR_MIN+i).map(y=>{
-    const c=yrs[y]||0,h=Math.max(7,Math.round(c/maxY*100));
-    return`<button class="lib-year" onclick="setYear(${y})" title="${y}: ${c} criterio${c!==1?'s':''}"><div class="lib-ybar" style="height:${h}%"></div><span>${y}</span></button>`;
+    const c=yrs[y]||0,h=c?Math.max(5,Math.round(c/maxY*BH)):4;
+    const ys=byCount(items.filter(d=>d.year===y),d=>d.source);
+    const hS=c?Math.round((ys.SCJN||0)/c*h):0,hT=Math.max(h-hS,0);
+    return`<button class="lib-year" onclick="setYear(${y})" title="${y}: ${c} criterio${c!==1?'s':''}"><div class="lib-ybar-stack">${hS?`<div class="lib-ybar" style="height:${hS}px"></div>`:''}${hT?`<div class="lib-ybar tfja" style="height:${hT}px"></div>`:''}</div><span>${y}</span></button>`;
   }).join('');
   const themeList=Object.entries(temas).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([t,c])=>`
     <button class="lib-theme" onclick="setTema('${escA(t)}')">
@@ -994,6 +1020,7 @@ function renderBiblioteca(){
       <button class="book-tile topic" onclick="setView('temas')"><div class="book-ico">${icons.grid}</div><strong>Temas</strong><span>Entrada por conceptos jurídicos.</span><em class="book-metric">${Object.keys(temas).length}</em></button>
       <button class="book-tile time" onclick="setView('crono')"><div class="book-ico">${icons.time}</div><strong>Años</strong><span>Criterios de 2013 a 2026.</span><em class="book-metric">${Object.keys(yrs).length}</em></button>
       <button class="book-tile law" onclick="showLeyes()"><div class="book-ico">${icons.law}</div><strong>Leyes</strong><span>CPEUM art. 109 y LFRPE.</span><em class="book-metric">§</em></button>
+      <button class="book-tile" style="background:linear-gradient(135deg,#0d2340,#1a3a5c);color:#fff" onclick="window.open('infografia.html','_blank')"><div class="book-ico" style="color:#7ec8f0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div><strong style="color:#fff">Infografía</strong><span style="color:rgba(255,255,255,.65)">Evolución cronológica 2013–2026.</span><em class="book-metric" style="color:#7ec8f0">↗</em></button>
     </div>
     <div class="lib-main">
       <section class="lib-section">
@@ -1107,12 +1134,41 @@ function renderTimeline(){
   const by={};st.filtered.forEach(d=>{const y=d.year||'?';if(!by[y])by[y]=[];by[y].push(d);});
   const yrs=Object.keys(by).sort((a,b)=>b-a);
   const max=Math.max(...Object.values(by).map(a=>a.length),1);
+  const BH=78;
   const map=Array.from({length:YEAR_MAX-YEAR_MIN+1},(_,i)=>YEAR_MIN+i).map(y=>{
-    const c=(by[y]||[]).length,h=Math.max(7,Math.round(c/max*100));
-    return`<button class="lib-year" onclick="setYear(${y})" title="${y}: ${c} criterio${c!==1?'s':''}"><div class="lib-ybar" style="height:${h}%"></div><span>${y}</span></button>`;
+    const its=by[y]||[],c=its.length,h=c?Math.max(5,Math.round(c/max*BH)):4;
+    const hS=c?Math.round(its.filter(d=>d.source==='SCJN').length/c*h):0,hT=Math.max(h-hS,0);
+    return`<button class="lib-year" onclick="setYear(${y})" title="${y}: ${c} criterio${c!==1?'s':''}"><div class="lib-ybar-stack">${hS?`<div class="lib-ybar" style="height:${hS}px"></div>`:''}${hT?`<div class="lib-ybar tfja" style="height:${hT}px"></div>`:''}</div><span>${y}</span></button>`;
   }).join('');
-  const html=yrs.map(y=>{const its=by[y];const ih=its.map(d=>{const gi=st.filtered.indexOf(d);const tc=d.temas.slice(0,1).map(t=>`<span class="li-tag">${esc(t)}</span>`).join('');return`<div class="tl-item" onclick="openItem(${gi})"><div class="tl-meta"><span class="bdg bdg-${d.tipo}" style="font-size:10px">${d.tipo}</span><span class="bdg bdg-${d.source}" style="font-size:10px">${d.source}</span><span style="font-size:11px;color:var(--g500)">${esc(d.sala)}</span>${tc}</div><div class="tl-rub">${esc(d.rubro.length>115?d.rubro.slice(0,115)+'…':d.rubro)}</div></div>`;}).join('');return`<div class="tl-yr"><div class="tl-yr-hdr"><div class="tl-yr-lbl">${y}</div><div class="tl-yr-line"></div><div class="tl-yr-cnt">${its.length} criterio${its.length!==1?'s':''}</div></div><div class="tl-items">${ih}</div></div>`;}).join('');
-  document.getElementById('vw').innerHTML=`<div class="v-scroll"><div class="timeline-view"><div class="timeline-card" style="margin-top:0;margin-bottom:16px"><div class="lib-section-h"><div><h2>Años</h2><p>Selecciona un año para abrir sus criterios.</p></div><button class="fchip-all" onclick="clearFilters();setView('crono')">Restablecer</button></div><div class="lib-year-map">${map}</div></div>${html||'<p style="color:var(--g400);text-align:center;padding:60px">Sin resultados</p>'}</div></div>`;
+  /* ponente global frequency */
+  const ponFreq={};DATA.filter(d=>d.source==='SCJN'&&d.ponente).forEach(d=>{ponFreq[d.ponente]=(ponFreq[d.ponente]||0)+1;});
+  const html=yrs.map(y=>{
+    const its=by[y];
+    const scjnN=its.filter(d=>d.source==='SCJN').length;
+    const tfjaaN=its.filter(d=>d.source==='TFJA').length;
+    const jurN=its.filter(d=>d.tipo==='J').length;
+    /* top ponente this year */
+    const ponYr={};its.filter(d=>d.source==='SCJN'&&d.ponente).forEach(d=>{ponYr[d.ponente]=(ponYr[d.ponente]||0)+1;});
+    const topPon=Object.entries(ponYr).sort((a,b)=>b[1]-a[1])[0];
+    const ponCard=topPon?`<div class="tl-pon-card" onclick="setPonente('${escA(topPon[0])}')" title="Ver todos los criterios de ${escA(topPon[0])}">
+      <img class="tl-pon-img" data-pon="${escA(topPon[0])}" alt="${escA(topPon[0])}">
+      <div class="tl-pon-info">
+        <div class="tl-pon-name">${esc(topPon[0])}</div>
+        <div class="tl-pon-stat">${topPon[1]} criterio${topPon[1]!==1?'s':''} en ${y} · ${ponFreq[topPon[0]]||0} en total (todos los años)</div>
+      </div>
+      ${(ponFreq[topPon[0]]||0)>=4?`<span class="tl-pon-star" title="Ponente recurrente en RPE">★</span>`:''}
+    </div>`:'';
+    const bkd=`<div class="tl-breakdown">${scjnN?`<span class="tl-bk-item scjn">${scjnN} SCJN</span>`:''}${tfjaaN?`<span class="tl-bk-item tfja">${tfjaaN} TFJA</span>`:''}${jurN?`<span class="tl-bk-item jur">${jurN} Jurispr.</span>`:''}</div>`;
+    const ih=its.map(d=>{
+      const gi=st.filtered.indexOf(d);
+      const tc=d.temas.slice(0,1).map(t=>`<span class="li-tag">${esc(t)}</span>`).join('');
+      const star=d.source==='SCJN'&&d.ponente&&(ponFreq[d.ponente]||0)>=4?`<span class="tl-star-badge" title="${esc(d.ponente)} — recurrente en RPE (${ponFreq[d.ponente]} criterios totales)">★</span>`:'';
+      return`<div class="tl-item" onclick="openItem(${gi})"><div class="tl-meta"><span class="bdg bdg-${d.tipo}" style="font-size:10px">${d.tipo}</span><span class="bdg bdg-${d.source}" style="font-size:10px">${d.source}</span><span style="font-size:11px;color:var(--g500)">${esc(d.sala)}</span>${tc}${star}</div><div class="tl-rub">${esc(d.rubro.length>115?d.rubro.slice(0,115)+'…':d.rubro)}</div></div>`;
+    }).join('');
+    return`<div class="tl-yr"><div class="tl-yr-hdr"><div class="tl-yr-lbl">${y}</div><div class="tl-yr-line"></div><div class="tl-yr-cnt">${its.length} criterio${its.length!==1?'s':''}</div></div>${bkd}${ponCard}<div class="tl-items">${ih}</div></div>`;
+  }).join('');
+  document.getElementById('vw').innerHTML=`<div class="v-scroll"><div class="timeline-view"><div class="timeline-card" style="margin-top:0;margin-bottom:16px"><div class="lib-section-h"><div><h2>Años</h2><p>Selecciona un año para abrir sus criterios.</p></div><button class="fchip-all" onclick="clearFilters();setView('crono')">Restablecer</button></div><div class="lib-year-map">${map}</div><div class="tl-map-leg"><span><span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px;margin-right:3px;vertical-align:middle"></span>SCJN</span><span><span style="display:inline-block;width:10px;height:10px;background:var(--tfja);border-radius:2px;margin-right:3px;vertical-align:middle"></span>TFJA</span></div></div>${html||'<p style="color:var(--g400);text-align:center;padding:60px">Sin resultados</p>'}</div></div>`;
+  document.querySelectorAll('.tl-pon-img[data-pon]').forEach(img=>{img.src=PHOTOS[img.dataset.pon]||PLACEHOLDER;});
 }
 
 /* ── ORIENTACIÓN: keywords ── */
@@ -1203,24 +1259,26 @@ function renderOrientacion(){
   const byYr={};scored.forEach(x=>{const y=x.d.year||'?';if(!byYr[y])byYr[y]={C:0,E:0,N:0,tot:0};byYr[y][x.s.favor]++;byYr[y].tot++;});
   const yrs=Array.from({length:14},(_,i)=>2013+i);
   const maxYTot=Math.max(...yrs.map(y=>byYr[y]?.tot||0),1);
+  const OBH=70;
   const yrCols=yrs.map(y=>{
     const d2=byYr[y]||{C:0,E:0,N:0,tot:0};
-    const h=Math.max(d2.tot/maxYTot*100,d2.tot>0?6:0);
+    const h=d2.tot?Math.max(6,Math.round(d2.tot/maxYTot*OBH)):3;
     const hC=d2.tot?Math.round(d2.C/d2.tot*h):0;
     const hE=d2.tot?Math.round(d2.E/d2.tot*h):0;
     const hN=Math.max(h-hC-hE,0);
     return`<div class="orient-yr-col" title="${y}: ${d2.tot} criterios · ${d2.C} pro-ciudadano · ${d2.E} pro-Estado" onclick="setYear(${y})">
       <div class="orient-yr-bar-wrap">
-        ${d2.C?`<div class="orient-yr-bar ciu" style="height:${hC}px"></div>`:''}
-        ${d2.E?`<div class="orient-yr-bar est" style="height:${hE}px"></div>`:''}
-        ${d2.N?`<div class="orient-yr-bar neu" style="height:${hN}px"></div>`:''}
+        ${hC?`<div class="orient-yr-bar ciu" style="height:${hC}px"></div>`:''}
+        ${hE?`<div class="orient-yr-bar est" style="height:${hE}px"></div>`:''}
+        ${hN?`<div class="orient-yr-bar neu" style="height:${hN}px"></div>`:''}
+        ${!d2.tot?`<div class="orient-yr-bar neu" style="height:3px;opacity:.4"></div>`:''}
       </div>
       <div class="orient-yr-lbl">${y}</div>
     </div>`;
   }).join('');
   const yrHtml=`<div class="orient-yr-sec">
     <h3>Distribución anual · toca un año para filtrar criterios</h3>
-    <div class="orient-yr-chart">${yrCols}</div>
+    <div class="orient-yr-chart"><div class="orient-yr-inner">${yrCols}</div></div>
   </div>`;
 
   /* period cards */

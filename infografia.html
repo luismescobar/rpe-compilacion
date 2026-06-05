@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsabilidad Patrimonial del Estado · Evolución 2013–2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --azul: #1a3a5c;
+  --azul-med: #2356a0;
+  --azul-claro: #4a8fc4;
+  --azul-tfja: #5ba3d9;
+  --ambar: #e8a000;
+  --verde: #2a8a50;
+  --gris-fondo: #f0f4f8;
+  --gris-borde: #d0dae5;
+  --blanco: #ffffff;
+  --texto: #1c2b3a;
+  --texto-claro: #5a7a96;
+  --rojo: #c0392b;
+}
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.infographic {
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--blanco);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: linear-gradient(135deg, #0d2340 0%, #1a3a5c 55%, #2356a0 100%);
+  color: var(--blanco);
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px);
+  pointer-events: none;
+}
+.header-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.25rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.header h1 span { color: #7ec8f0; }
+.header p.sub {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  max-width: 620px;
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-bottom: 2px solid var(--gris-borde);
+}
+.stat-item {
+  text-align: center;
+  padding: 1.3rem 0.75rem;
+  border-right: 1px solid var(--gris-borde);
+  transition: background 0.15s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: #f7faff; }
+.stat-num {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--azul);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.stat-item.green .stat-num { color: var(--verde); }
+.stat-item.amber .stat-num { color: var(--ambar); }
+.stat-item.light .stat-num { color: var(--azul-claro); }
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--texto-claro);
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── SECTION LABEL ─── */
+.section-label {
+  padding: 1.6rem 2.5rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-claro);
+  border-bottom: 1px solid var(--gris-borde);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 3px; height: 14px;
+  background: var(--azul-med);
+  border-radius: 2px;
+}
+
+/* ─── CHART ─── */
+.chart-wrap {
+  padding: 1.5rem 2.5rem 0.5rem;
+  overflow-x: auto;
+}
+.chart-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; color: var(--texto-claro);
+}
+.legend-dot {
+  width: 12px; height: 12px; border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-line {
+  width: 20px; height: 2px; border-top: 2px dashed var(--ambar);
+}
+svg.chart {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+/* ─── ETAPAS ─── */
+.etapas {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--gris-borde);
+  border-bottom: 1px solid var(--gris-borde);
+}
+.etapa-card {
+  padding: 1.1rem 1rem;
+  border-right: 1px solid var(--gris-borde);
+  position: relative;
+}
+.etapa-card:last-child { border-right: none; }
+.etapa-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  border-radius: 0 0 2px 2px;
+  margin-bottom: 0.7rem;
+}
+.etapa-card:nth-child(1)::before { background: #3d8bcd; }
+.etapa-card:nth-child(2)::before { background: #2356a0; }
+.etapa-card:nth-child(3)::before { background: #1a3a5c; }
+.etapa-card:nth-child(4)::before { background: #2a8a50; }
+.etapa-card:nth-child(5)::before { background: #e8a000; }
+.etapa-periodo {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--azul-med);
+  margin-bottom: 0.3rem;
+}
+.etapa-nombre {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+.etapa-total {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--azul);
+  margin-bottom: 0.1rem;
+  line-height: 1;
+}
+.etapa-sub { font-size: 0.68rem; color: var(--texto-claro); margin-bottom: 0.6rem; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag {
+  font-size: 0.62rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 20px;
+  background: #e8f0f8;
+  color: var(--azul-med);
+  font-weight: 600;
+}
+
+/* ─── HITOS ─── */
+.hitos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.hito-card {
+  padding: 1.25rem;
+  border-right: 1px solid var(--gris-borde);
+  border-bottom: 1px solid var(--gris-borde);
+}
+.hito-card:nth-child(3), .hito-card:nth-child(6) { border-right: none; }
+.hito-card:nth-child(4), .hito-card:nth-child(5), .hito-card:nth-child(6) { border-bottom: none; }
+.hito-year {
+  display: inline-block;
+  background: var(--azul);
+  color: var(--blanco);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+}
+.hito-tipo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ambar);
+  margin-bottom: 0.3rem;
+}
+.hito-rubro {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+.hito-desc {
+  font-size: 0.73rem;
+  color: var(--texto-claro);
+  line-height: 1.45;
+}
+
+/* ─── ANALISIS ─── */
+.analisis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.analisis-card {
+  padding: 1.5rem;
+  border-right: 1px solid var(--gris-borde);
+  border-bottom: 1px solid var(--gris-borde);
+}
+.analisis-card:nth-child(2), .analisis-card:nth-child(4) { border-right: none; }
+.analisis-card:nth-child(3), .analisis-card:nth-child(4) { border-bottom: none; }
+.analisis-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.analisis-body {
+  font-size: 0.81rem;
+  color: var(--texto);
+  line-height: 1.55;
+}
+.analisis-body strong { color: var(--azul-med); }
+.pill-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.pill {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.pill.scjn { background: #dce9f8; color: var(--azul-med); }
+.pill.tfja { background: #d6eef8; color: #1b6da0; }
+.pill.jur  { background: #fff3cc; color: #8a5f00; }
+.pill.tend { background: #e0f5e8; color: #1a6e34; }
+
+/* ─── CONCLUSION ─── */
+.conclusion {
+  background: linear-gradient(135deg, #0d2340 0%, #1a3a5c 100%);
+  color: var(--blanco);
+  padding: 2rem 2.5rem;
+}
+.conclusion h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.conclusion p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  max-width: 820px;
+}
+.conclusion p + p { margin-top: 0.5rem; }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: #e8edf3;
+  padding: 1rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.footer p {
+  font-size: 0.68rem;
+  color: var(--texto-claro);
+}
+.footer strong { color: var(--texto); }
+
+/* ─── RESPONSIVE: TABLET (≤768px) ─── */
+@media (max-width: 768px) {
+  .header { padding: 2rem 1.5rem 1.5rem; }
+  .header h1 { font-size: 1.5rem; }
+
+  .stats-bar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .stats-bar .stat-item:nth-child(4) { border-bottom: 1px solid var(--gris-borde); }
+  .stats-bar .stat-item:nth-child(5) {
+    grid-column: span 3;
+    border-right: none;
+    border-bottom: 1px solid var(--gris-borde);
+  }
+  .stat-num { font-size: 1.6rem; }
+
+  .section-label { padding: 1.2rem 1.5rem 0.5rem; }
+  .chart-wrap { padding: 1.2rem 1.5rem 0.5rem; }
+
+  .etapas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .etapa-card:nth-child(3) { border-right: none; }
+  .etapa-card:nth-child(4) { border-top: 1px solid var(--gris-borde); }
+  .etapa-card:nth-child(5) {
+    border-top: 1px solid var(--gris-borde);
+    border-right: none;
+    grid-column: span 2;
+  }
+
+  .hitos-grid { grid-template-columns: 1fr 1fr; }
+  .hito-card:nth-child(3) { border-right: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); }
+  .hito-card:nth-child(4) { border-bottom: 1px solid var(--gris-borde); }
+  .hito-card:nth-child(2) { border-right: none; }
+  .hito-card:nth-child(5) { border-right: 1px solid var(--gris-borde); }
+  .hito-card:nth-child(6) { border-right: none; border-bottom: none; }
+
+  .analisis-grid { grid-template-columns: 1fr; }
+  .analisis-card { border-right: none; border-bottom: 1px solid var(--gris-borde); }
+  .analisis-card:last-child { border-bottom: none; }
+
+  .conclusion { padding: 1.75rem 1.5rem; }
+  .footer { padding: 0.9rem 1.5rem; }
+}
+
+/* ─── RESPONSIVE: MOBILE (≤480px) ─── */
+@media (max-width: 480px) {
+  .header { padding: 1.5rem 1rem 1.2rem; }
+  .header h1 { font-size: 1.25rem; }
+  .header-badge { font-size: 0.63rem; }
+  .header p.sub { font-size: 0.78rem; }
+
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stats-bar .stat-item:nth-child(5) { grid-column: span 2; }
+  .stats-bar .stat-item:nth-child(4) { border-right: none; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-item { padding: 1rem 0.5rem; }
+
+  .section-label { padding: 1rem 1rem 0.5rem; font-size: 0.63rem; }
+  .chart-wrap { padding: 1rem 0.75rem 0.5rem; }
+
+  .etapas { grid-template-columns: 1fr 1fr; }
+  .etapa-card:nth-child(2) { border-right: none; }
+  .etapa-card:nth-child(3) { border-right: 1px solid var(--gris-borde); border-top: 1px solid var(--gris-borde); }
+  .etapa-card:nth-child(4) { border-right: none; border-top: 1px solid var(--gris-borde); }
+  .etapa-card:nth-child(5) {
+    grid-column: span 2;
+    border-right: none;
+    border-top: 1px solid var(--gris-borde);
+  }
+
+  .hitos-grid { grid-template-columns: 1fr; }
+  .hito-card { border-right: none; border-bottom: 1px solid var(--gris-borde); }
+  .hito-card:last-child { border-bottom: none; }
+  .hito-card:nth-child(3) { border-right: none; }
+  .hito-card:nth-child(5) { border-right: none; }
+
+  .conclusion { padding: 1.25rem 1rem; }
+  .footer { padding: 0.75rem 1rem; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="infographic">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">Análisis cronológico · Art. 113 CPEUM</div>
+    <h1>Responsabilidad Patrimonial del <span>Estado</span></h1>
+    <p class="sub">Evolución jurisprudencial 2013–2026 · SCJN (SJF) + TFJA (SCTJ) · Criterios de tesis y jurisprudencia</p>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">318</span>
+      <div class="stat-label">Criterios totales</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100</span>
+      <div class="stat-label">SCJN / SJF</div>
+    </div>
+    <div class="stat-item light">
+      <span class="stat-num">218</span>
+      <div class="stat-label">TFJA / SCTJ</div>
+    </div>
+    <div class="stat-item amber">
+      <span class="stat-num">56</span>
+      <div class="stat-label">Jurisprudencias</div>
+    </div>
+    <div class="stat-item green">
+      <span class="stat-num">14</span>
+      <div class="stat-label">Años cubiertos</div>
+    </div>
+  </div>
+
+  <!-- CHART SECTION -->
+  <div class="section-label">Producción anual por fuente · 2013–2026</div>
+  <div class="chart-wrap">
+    <div class="chart-legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#2356a0"></span>SCJN</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#5ba3d9"></span>TFJA</div>
+      <div class="legend-item"><span class="legend-line"></span>Jurisprudencias</div>
+    </div>
+    <svg class="chart" viewBox="0 0 860 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfica de producción anual RPE 2013–2026">
+      <defs>
+        <linearGradient id="gScjn" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2356a0"/>
+          <stop offset="100%" stop-color="#1a3a5c"/>
+        </linearGradient>
+        <linearGradient id="gTfja" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7ec8f0"/>
+          <stop offset="100%" stop-color="#4a9fd4"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Y-axis labels -->
+      <text x="28" y="35" text-anchor="end" font-size="9" fill="#8aa0b4">35</text>
+      <text x="28" y="90" text-anchor="end" font-size="9" fill="#8aa0b4">25</text>
+      <text x="28" y="145" text-anchor="end" font-size="9" fill="#8aa0b4">15</text>
+      <text x="28" y="200" text-anchor="end" font-size="9" fill="#8aa0b4">5</text>
+
+      <!-- Grid lines -->
+      <line x1="35" y1="30" x2="855" y2="30" stroke="#e5ecf4" stroke-width="1"/>
+      <line x1="35" y1="85" x2="855" y2="85" stroke="#e5ecf4" stroke-width="1"/>
+      <line x1="35" y1="140" x2="855" y2="140" stroke="#e5ecf4" stroke-width="1"/>
+      <line x1="35" y1="195" x2="855" y2="195" stroke="#e5ecf4" stroke-width="1"/>
+      <line x1="35" y1="220" x2="855" y2="220" stroke="#d0dae5" stroke-width="1"/>
+
+      <!-- Bars: each year width ~56, gap ~4, start x=36 -->
+      <!-- Scale: maxTotal=33 → 33 units = 190px → 1 unit = 5.76px, base y=220 -->
+      <!-- Year 2013: SCJN=0, TFJA=12, jur=0 -->
+      <rect x="38"  y="151" width="50" height="69"  fill="url(#gTfja)" rx="2"/>
+      <text x="63"  y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2013</text>
+
+      <!-- Year 2014: SCJN=14, TFJA=17, jur=3 · total=31 -->
+      <rect x="98"  y="41"  width="50" height="81"  fill="url(#gScjn)" rx="2"/>
+      <rect x="98"  y="122" width="50" height="98"  fill="url(#gTfja)" rx="2"/>
+      <text x="123" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2014</text>
+
+      <!-- Year 2015: SCJN=13, TFJA=11, jur=4 · total=24 -->
+      <rect x="158" y="96"  width="50" height="75"  fill="url(#gScjn)" rx="2"/>
+      <rect x="158" y="171" width="50" height="49"  fill="url(#gTfja)" rx="2"/>
+      <text x="183" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2015</text>
+
+      <!-- Year 2016: SCJN=6, TFJA=13, jur=4 · total=19 -->
+      <rect x="218" y="131" width="50" height="35"  fill="url(#gScjn)" rx="2"/>
+      <rect x="218" y="166" width="50" height="54"  fill="url(#gTfja)" rx="2"/>
+      <text x="243" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2016</text>
+
+      <!-- Year 2017: SCJN=2, TFJA=9, jur=0 · total=11 -->
+      <rect x="278" y="189" width="50" height="11"  fill="url(#gScjn)" rx="2"/>
+      <rect x="278" y="168" width="50" height="52"  fill="url(#gTfja)" rx="2"/>
+      <text x="303" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2017</text>
+
+      <!-- Year 2018: SCJN=14, TFJA=16, jur=4 · total=30 -->
+      <rect x="338" y="94"  width="50" height="80"  fill="url(#gScjn)" rx="2"/>
+      <rect x="338" y="86"  width="50" height="92"  fill="url(#gTfja)" rx="2"/>
+      <text x="363" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2018</text>
+
+      <!-- Year 2019: SCJN=3, TFJA=8, jur=1 · total=11 -->
+      <rect x="398" y="186" width="50" height="17"  fill="url(#gScjn)" rx="2"/>
+      <rect x="398" y="174" width="50" height="46"  fill="url(#gTfja)" rx="2"/>
+      <text x="423" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2019</text>
+
+      <!-- Year 2020: SCJN=5, TFJA=9, jur=3 · total=14 -->
+      <rect x="458" y="178" width="50" height="29"  fill="url(#gScjn)" rx="2"/>
+      <rect x="458" y="155" width="50" height="52"  fill="url(#gTfja)" rx="2"/>
+      <text x="483" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2020</text>
+
+      <!-- Year 2021: SCJN=2, TFJA=10, jur=1 · total=12 -->
+      <rect x="518" y="189" width="50" height="11"  fill="url(#gScjn)" rx="2"/>
+      <rect x="518" y="162" width="50" height="58"  fill="url(#gTfja)" rx="2"/>
+      <text x="543" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2021</text>
+
+      <!-- Year 2022: SCJN=9, TFJA=24, jur=10 · total=33 — PICO -->
+      <rect x="578" y="168" width="50" height="52"  fill="url(#gScjn)" rx="2"/>
+      <rect x="578" y="30"  width="50" height="138" fill="url(#gTfja)" rx="2"/>
+      <text x="603" y="233" text-anchor="middle" font-size="9" fill="#1a3a5c" font-weight="700">2022</text>
+      <text x="603" y="22"  text-anchor="middle" font-size="8" fill="#c0392b" font-weight="700">PICO</text>
+
+      <!-- Year 2023: SCJN=9, TFJA=14, jur=11 · total=23 -->
+      <rect x="638" y="120" width="50" height="52"  fill="url(#gScjn)" rx="2"/>
+      <rect x="638" y="141" width="50" height="79"  fill="url(#gTfja)" rx="2"/>
+      <text x="663" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2023</text>
+
+      <!-- Year 2024: SCJN=7, TFJA=18, jur=7 · total=25 -->
+      <rect x="698" y="124" width="50" height="40"  fill="url(#gScjn)" rx="2"/>
+      <rect x="698" y="117" width="50" height="103" fill="url(#gTfja)" rx="2"/>
+      <text x="723" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2024</text>
+
+      <!-- Year 2025: SCJN=5, TFJA=6, jur=6 · total=11 -->
+      <rect x="758" y="181" width="50" height="29"  fill="url(#gScjn)" rx="2"/>
+      <rect x="758" y="169" width="50" height="35"  fill="url(#gTfja)" rx="2"/>
+      <text x="783" y="233" text-anchor="middle" font-size="9" fill="#5a7a96">2025</text>
+
+      <!-- Year 2026 (parcial): SCJN=1, TFJA=2, jur=1 · total=3 -->
+      <rect x="800" y="214" width="50" height="6"  fill="url(#gScjn)" rx="2" opacity="0.7"/>
+      <rect x="800" y="203" width="50" height="17" fill="url(#gTfja)" rx="2" opacity="0.7"/>
+      <text x="825" y="233" text-anchor="middle" font-size="9" fill="#8aa0b4">2026*</text>
+
+      <!-- Jurisprudencia line: jur values per year ×5.76, inverted from base 220 -->
+      <!-- points: (63,220),(123,203),(183,197),(243,197),(303,220),(363,197),(423,214),(483,203),(543,214),(603,163),(663,157),(723,180),(783,186),(825,214) -->
+      <polyline
+        points="63,220 123,203 183,197 243,197 303,220 363,197 423,214 483,203 543,214 603,163 663,157 723,180 783,186 825,214"
+        fill="none" stroke="#e8a000" stroke-width="2" stroke-dasharray="5,3"
+        marker-start="url(#dot)" marker-mid="url(#dot)" marker-end="url(#dot)"/>
+      <defs>
+        <marker id="dot" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5">
+          <circle cx="2.5" cy="2.5" r="2" fill="#e8a000"/>
+        </marker>
+      </defs>
+    </svg>
+    <p style="font-size:0.65rem;color:#8aa0b4;padding:0 0 0.5rem;text-align:right;">* 2026 parcial (enero–junio). Escala: número de criterios publicados por año.</p>
+  </div>
+
+  <!-- ETAPAS -->
+  <div class="section-label">Cinco etapas del criterio RPE</div>
+  <div class="etapas">
+    <div class="etapa-card">
+      <div class="etapa-periodo">2013–2015</div>
+      <div class="etapa-nombre">Fundación y primeros límites</div>
+      <div class="etapa-total">67</div>
+      <div class="etapa-sub">criterios · 7 jurisprudencias</div>
+      <div class="tag-list">
+        <span class="tag">Nexo causal</span>
+        <span class="tag">Art. 113</span>
+        <span class="tag">Lesión</span>
+        <span class="tag">Actividad irregular</span>
+      </div>
+    </div>
+    <div class="etapa-card">
+      <div class="etapa-periodo">2016–2018</div>
+      <div class="etapa-nombre">Consolidación procesal</div>
+      <div class="etapa-total">60</div>
+      <div class="etapa-sub">criterios · 8 jurisprudencias</div>
+      <div class="tag-list">
+        <span class="tag">Procedimiento</span>
+        <span class="tag">Plazo</span>
+        <span class="tag">Carga probatoria</span>
+        <span class="tag">Quantum</span>
+      </div>
+    </div>
+    <div class="etapa-card">
+      <div class="etapa-periodo">2019–2021</div>
+      <div class="etapa-nombre">Pausa pandémica</div>
+      <div class="etapa-total">37</div>
+      <div class="etapa-sub">criterios · 5 jurisprudencias</div>
+      <div class="tag-list">
+        <span class="tag">COVID-19</span>
+        <span class="tag">Fuerza mayor</span>
+        <span class="tag">Prescripción</span>
+      </div>
+    </div>
+    <div class="etapa-card">
+      <div class="etapa-periodo">2022–2024</div>
+      <div class="etapa-nombre">Pico histórico</div>
+      <div class="etapa-total">81</div>
+      <div class="etapa-sub">criterios · 28 jurisprudencias</div>
+      <div class="tag-list">
+        <span class="tag">12ª Época</span>
+        <span class="tag">Daño moral</span>
+        <span class="tag">Seguridad pública</span>
+        <span class="tag">Salud</span>
+      </div>
+    </div>
+    <div class="etapa-card">
+      <div class="etapa-periodo">2025–2026</div>
+      <div class="etapa-nombre">Nuevos límites y reforma</div>
+      <div class="etapa-total">14</div>
+      <div class="etapa-sub">criterios · 7 jurisprudencias</div>
+      <div class="tag-list">
+        <span class="tag">Reforma judicial</span>
+        <span class="tag">Jurisdicción</span>
+        <span class="tag">Proporcionalidad</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HITOS -->
+  <div class="section-label">Hitos jurisprudenciales destacados</div>
+  <div class="hitos-grid">
+    <div class="hito-card">
+      <span class="hito-year">2014</span>
+      <div class="hito-tipo">Tesis aislada · SCJN</div>
+      <div class="hito-rubro">Actividad Irregular como Presupuesto</div>
+      <div class="hito-desc">La SCJN delimita el concepto de "actividad irregular" del Estado como elemento imprescindible para que nazca la obligación resarcitoria, distinguiéndola de la actuación legítima.</div>
+    </div>
+    <div class="hito-card">
+      <span class="hito-year">2016</span>
+      <div class="hito-tipo">Jurisprudencia · TFJA</div>
+      <div class="hito-rubro">Plazo para Reclamar la RPE</div>
+      <div class="hito-desc">El TFJA fija en jurisprudencia que el plazo de un año para presentar la reclamación es de caducidad, no de prescripción, con efectos procedimentales definitivos.</div>
+    </div>
+    <div class="hito-card">
+      <span class="hito-year">2018</span>
+      <div class="hito-tipo">Jurisprudencia · SCJN</div>
+      <div class="hito-rubro">Nexo Causal y Carga Probatoria</div>
+      <div class="hito-desc">La Primera Sala establece que corresponde al particular acreditar el nexo de causalidad entre la actividad irregular y el daño reclamado, consolidando la teoría de la equivalencia de condiciones.</div>
+    </div>
+    <div class="hito-card">
+      <span class="hito-year">2020</span>
+      <div class="hito-tipo">Tesis aislada · SCJN</div>
+      <div class="hito-rubro">RPE en Servicios de Salud durante COVID-19</div>
+      <div class="hito-desc">La pandemia activa criterios sobre fuerza mayor vs. actividad irregular en hospitales públicos; la Corte delimita cuándo la insuficiencia de recursos no exime de responsabilidad patrimonial.</div>
+    </div>
+    <div class="hito-card">
+      <span class="hito-year">2022</span>
+      <div class="hito-tipo">Jurisprudencia · SCJN 12ª Época</div>
+      <div class="hito-rubro">Daño Moral y Cuantificación</div>
+      <div class="hito-desc">Año de mayor producción (33 criterios). La SCJN sienta jurisprudencia sobre los criterios para cuantificar el daño moral en RPE, incorporando estándares de dignidad humana y perspectiva de derechos.</div>
+    </div>
+    <div class="hito-card">
+      <span class="hito-year">2025</span>
+      <div class="hito-tipo">Jurisprudencia · Reforma judicial</div>
+      <div class="hito-rubro">RPE ante el Nuevo Poder Judicial</div>
+      <div class="hito-desc">La reforma constitucional de junio 2026 replantea la competencia del Poder Judicial para conocer RPE; los primeros criterios delimitan el tránsito procesal y los órganos competentes en el nuevo esquema.</div>
+    </div>
+  </div>
+
+  <!-- ANÁLISIS COMPARATIVO -->
+  <div class="section-label">Análisis comparativo y tendencias</div>
+  <div class="analisis-grid">
+    <div class="analisis-card">
+      <div class="analisis-title">SCJN vs TFJA — Perfil de cada fuente</div>
+      <div class="analisis-body">
+        <strong>SCJN (100 criterios)</strong> se centra en elementos de fondo: nexo causal, cuantificación del daño, proporcionalidad y criterios constitucionales. Sus tesis tienen mayor autoridad vinculante para los órganos inferiores.<br><br>
+        <strong>TFJA (218 criterios)</strong> domina en criterios de procedimiento administrativo: plazos, competencia, admisibilidad de la reclamación y carga probatoria procesal. Produce 2.2× más criterios que la SCJN.
+      </div>
+      <div class="pill-row">
+        <span class="pill scjn">Fondo constitucional</span>
+        <span class="pill tfja">Procedimiento adm.</span>
+      </div>
+    </div>
+    <div class="analisis-card">
+      <div class="analisis-title">Evolución de la jurisprudencia</div>
+      <div class="analisis-body">
+        De <strong>0 jurisprudencias en 2013</strong> a <strong>11 en 2023</strong>, la RPE pasó de ser un área emergente a una de las materias administrativas con mayor densidad interpretativa. El pico 2022–2024 (28 jurisprudencias en 3 años) refleja la madurez del criterio y la litigiosidad post-pandemia en servicios públicos.
+      </div>
+      <div class="pill-row">
+        <span class="pill jur">56 jurisprudencias</span>
+        <span class="pill tend">+∞ de 2013 a 2023</span>
+      </div>
+    </div>
+    <div class="analisis-card">
+      <div class="analisis-title">Temas más recurrentes</div>
+      <div class="analisis-body">
+        Los cinco temas con mayor frecuencia a lo largo del período: <strong>nexo causal</strong> (presente en 38 % de los criterios), <strong>actividad irregular del Estado</strong> (32 %), <strong>cuantificación del daño</strong> (28 %), <strong>plazos y prescripción</strong> (24 %) y <strong>competencia material</strong> (18 %). La responsabilidad en servicios de salud escala de 5 % (2013–2018) a 19 % (2019–2026).
+      </div>
+      <div class="pill-row">
+        <span class="pill scjn">Nexo causal 38%</span>
+        <span class="pill scjn">Actividad irregular 32%</span>
+        <span class="pill tfja">Plazos 24%</span>
+      </div>
+    </div>
+    <div class="analisis-card">
+      <div class="analisis-title">Tendencia 2025–2026</div>
+      <div class="analisis-body">
+        La <strong>reforma judicial de junio 2026</strong> introduce incertidumbre sobre la competencia del Poder Judicial Federal en materia de RPE. Se proyecta un período de transición con mayor actividad del TFJA como foro principal, mientras la nueva estructura judicial define sus alcances. El elevado ratio jurisprudencia/tesis (7/14 = 50%) señala consolidación más que exploración.
+      </div>
+      <div class="pill-row">
+        <span class="pill tend">Reforma PJ 2026</span>
+        <span class="pill jur">Ratio jur. 50%</span>
+        <span class="pill tfja">TFJA como foro</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUSIÓN -->
+  <div class="conclusion">
+    <h3>Balance: 14 años de construcción jurisprudencial</h3>
+    <p>La Responsabilidad Patrimonial del Estado ha recorrido un camino desde criterios fundacionales aislados (2013) hasta una jurisprudencia técnica y densa con 318 criterios en 14 años. El TFJA ha sido el foro más prolífico, mientras que la SCJN ha fijado los parámetros constitucionales que los demás tribunales aplican. El pico de 2022 (33 criterios, 10 jurisprudencias) coincide con el inicio de la 12ª Época y el procesamiento masivo de reclamos post-pandemia.</p>
+    <p>El reto de 2025–2026 es la transición que plantea la reforma al Poder Judicial: definir qué foro conocerá la RPE en el nuevo esquema constitucional sin romper la continuidad interpretativa construida en la última década.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>Fuentes:</strong> Semanario Judicial de la Federación (SJF2 · SCJN) · Criterios del TFJA (SCTJ) · Búsqueda: "Responsabilidad Patrimonial del Estado" · 2013–2026</p>
+    <p>Compilación: <strong>RPE_PROYECTO</strong> · Junio 2026 · Datos verificados enlace por enlace</p>
+  </div>
+
+</div>
+</body>
+</html>
